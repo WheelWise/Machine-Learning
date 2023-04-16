@@ -11,8 +11,12 @@ embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
 # Libaries to read json, knn model and n-dimensional arrays
 import json
+# pip install numpy
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
+
+#import preprocessing
+import preprocessing
 
 
 # Function to read each object of the databse file and convert it to a dictionary
@@ -78,11 +82,18 @@ class SearchEngine:
         return res
 
 
-# Lines to use the functions and objects described before
-database = readDatabase("./database.json")
-mySearcher = SearchEngine(embed, carParser, 3)
-mySearcher.buildKnowledgeFromDb(database)
-mySearcher.fit()
+def main():
+    # Lines to use the functions and objects described before
+    database = readDatabase("./database.json")
+    mySearcher = SearchEngine(embed, carParser, 3)
+    mySearcher.buildKnowledgeFromDb(database)
+    mySearcher.fit()
+    
+    prompt = input("Search: ")
+    prompt = preprocessing.transform_prompt(prompt)
 
-# Search function usage
-print(mySearcher.search("bleu audi"))
+    # Search function usage
+    print(mySearcher.search(prompt))
+if __name__ == "__main__":
+    main()
+
