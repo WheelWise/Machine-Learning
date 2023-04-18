@@ -10,7 +10,7 @@ model = SentenceTransformer("paraphrase-multilingual-mpnet-base-v2")
 
 
 def embed(sentence: str) -> list:
-    return modelSpanish.encode([sentence])[0]
+    return model.encode([sentence])[0]
 
 
 # Functios for reading the database and parsing the cars
@@ -28,7 +28,7 @@ def readDatabase(url: str, database: str, collection: str) -> list:
     return data
 
 
-def carParser(car):
+def carParser(car) -> str:
     words = []
     for key in car:
         if not isinstance(car[key], str):
@@ -82,6 +82,15 @@ class SearchEngine:
         return res
 
 
-x = readDatabase("mongodb://localhost:27017/", "Test", "cars")
-for i in x:
-    print(carParser(i))
+if __name__ == "__main__":
+    # Lines to instatiate the functions and objects described before
+    database = readDatabase("mongodb://localhost:27017/", "Test", "cars")
+    mySearcher = SearchEngine(embed, carParser, 3)
+    mySearcher.buildKnowledgeFromDb(database)
+    mySearcher.fit()
+    while True:
+        answer = input("New Search ? (Y/n) ")
+        if answer.lower() != "y":
+            break
+        test = input("Busqueda : ")
+        print("Resultado : ", mySearcher.search(test))
