@@ -1,6 +1,6 @@
 # WW Natural Language Search Engine 😶‍🌫️
 
-This is the search engine implementation for the WheelWise platform, if you want to know a little more about how we came up with it, you can visit the directory called `ProofOfConcept`.
+This is the search engine implementation for the WheelWise platform, if you want to know a little more about how we came up with it, you can visit the directory called `concept`.
 
 ## How it works ?
 
