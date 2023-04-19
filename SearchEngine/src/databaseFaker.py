@@ -7,6 +7,7 @@ By : Sebastian Mora (@Bastian1110)
 import sys
 import random
 from pymongo import MongoClient
+import json
 
 
 makes = [
@@ -88,9 +89,22 @@ def generateCars(num: int):
     return cars
 
 
+def writeJson(data, filename):
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        print("Usage : python3 <MONGO_URL> <DB_NAME> <COLLECTION> <N_CARS>")
+        print("For ceating a fake db in Mongo")
+        print("python3 databaseFaker.py <MONGO_URL> <DB_NAME> <COLLECTION> <N_CARS>")
+        print("For ceating a fake db in a JSON file")
+        print("python3 databaseFaker.py json <N_CARS>")
+        quit()
+    if len(sys.argv) == 3 and sys.argv[1] == "json":
+        print(f"Creating a JSON with {sys.argv[2]} cars")
+        writeJson(generateCars(int(sys.argv[2])), "fakedata.json")
+        print("Fake Database Created!")
         quit()
     if len(sys.argv) != 5:
         print("Oops ... You are missing one or more arguments.")
