@@ -2,3 +2,4 @@ sentence_transformers
 pymongo
 numpy
 sklearn
+annoy

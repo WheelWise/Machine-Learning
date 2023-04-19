@@ -1,5 +1,0 @@
-tensorflow_hub
-tensorflow 
-json
-numpy
-sklearn

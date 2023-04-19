@@ -2,7 +2,17 @@
 Search Engine using ANN(oy) algorithm and sentence embedding
 By : Sebastian Mora (@bastian1110)
 """
-from annoy import AnnoyIndex
+from time import time
+
+# Import the multilingual sentence encoder
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer("all-mpnet-base-v2")
+
+
+def embed(sentence: str) -> list:
+    return model.encode([sentence])[0]
+
 
 # Functions for reading the database and parsing the cars
 from pymongo import MongoClient
@@ -30,33 +40,54 @@ def carParser(car) -> str:
     return " ".join(words[1:])
 
 
-from sentence_transformers import SentenceTransformer
+# Libaries for the SearchEngine model
+import numpy as np
+from annoy import AnnoyIndex
 
 
-def embed(sentence: str):
-    return model.encode([sentence])[0]
+class SearchEngine:
+    def __init__(self, embedder, preprocessor, dimensions: int):
+        self.embedder = embedder
+        self.preprocessor = preprocessor
+        self.dimensions = dimensions
+        self.model = AnnoyIndex(self.dimensions, "angular")
+
+    def buildKnowledgeFromDb(self, database: list) -> None:
+        start = time()
+        for item in database:
+            sentence = self.preprocessor(item)
+            self.model.add_item(item["_id"], self.embedder(sentence))
+        end = time()
+        print(f"Time taken to process database : {end - start} seconds")
+
+    def build(self, n_trees: int) -> None:
+        start = time()
+        self.model.build(n_trees)
+        end = time()
+        print(f"Time taken to build ann: {end - start} seconds")
+
+    def unbuild(self) -> None:
+        self.model.unbuild()
+
+    def save(self, file: str) -> None:
+        self.model.save(file)
+
+    def load(self, file: str) -> None:
+        self.model.load(file)
+
+    def search(self, string, n) -> list:
+        return self.model.get_nns_by_vector(self.embedder(string), n)
 
 
 if __name__ == "__main__":
-    # Lines to instatiate the functions and objects described before
-    model = SentenceTransformer("all-mpnet-base-v2")
-    database = readDatabase("mongodb://localhost:27017/", "Test", "cars")
-    sentences = []
-    for car in database:
-        sentences.append(carParser(car))
-
-    myAnnoy = AnnoyIndex(768, "angular")
-
-    for i in range(1, len(sentences) + 1):
-        embedded = embed(sentences[i - 1])
-        myAnnoy.add_item(i, embedded)
-
-    myAnnoy.build(10)
-    myAnnoy.save("annoytest.ann")
-
+    database = readDatabase("mongodb://localhost:27017/", "test", "cars")
+    mySearcher = SearchEngine(embed, carParser, 768)
+    mySearcher.buildKnowledgeFromDb(database)
+    mySearcher.build(10)
+    mySearcher.save("./models/test.ann")
     while True:
         answer = input("New Search ? (Y/n) ")
-        if answer.lower() != "y":
+        if answer.lower() == "n":
             break
         test = input("Busqueda : ")
-        print("Resultado : ", myAnnoy.get_nns_by_vector(embed(test), 3))
+        print("Resultado : ", mySearcher.search(test, 5))
