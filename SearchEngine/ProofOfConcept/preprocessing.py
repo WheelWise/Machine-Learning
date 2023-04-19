@@ -1,3 +1,8 @@
+""" 
+Natural Language Preprocessing
+By : Rodrigo Mendoza
+"""
+
 import re
 # pip install googletrans==3.1.0a0
 from googletrans import Translator
@@ -10,18 +15,25 @@ import spacy
 # pip install nltk
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
-import nltk
-nltk.download('stopwords')
+from nltk import download
+# import nltk
+
 # pip install pyspellchecker
 from spellchecker import SpellChecker
+# siguiente paso convertir de caracter a numerico (ex. cinco -> 5)
+# text_to_num.py
+import text_to_num
 
 
 def transform_prompt(prompt):
+    download('stopwords')
     prompt = strip_formatting(prompt)
     prompt = translate_prompt(prompt)
     prompt = correct_spelling(prompt)
     prompt = lemmatize_prompt(prompt)
     prompt = remove_stopwords(prompt)
+    prompt = convert_to_numeric(prompt)
+    prompt = strip_formatting(prompt)
     
     return prompt
     
@@ -41,12 +53,20 @@ def strip_formatting(prompt):
     prompt = re.sub(r'\n', '', prompt)
     #Exclude cases of hashtags
     prompt = re.sub(r'\B(\#[a-zA-Z]+\b)(?!;)', '', prompt)
-    # Consider only alphanumeric
-    prompt = re.sub(r'[^a-zA-Z0-9|\s]' , '', prompt)
+    
     # Lower Case process
     prompt = prompt.lower()
     #Eliminate words length <= 2 
     prompt = re.sub(r'\b\w{1,2}\b', '', prompt)
+    # quitar acentos
+    prompt = re.sub(r'[áàäâ]', 'a', prompt)
+    prompt = re.sub(r'[éèëê]', 'e', prompt)
+    prompt = re.sub(r'[íìïî]', 'i', prompt)
+    prompt = re.sub(r'[óòöô]', 'o', prompt)
+    prompt = re.sub(r'[úùüû]', 'u', prompt)
+    # Consider only alphanumeric
+
+    prompt = re.sub(r'[^a-zA-Z0-9|\s]' , '', prompt)
     
     return prompt
 
@@ -83,14 +103,23 @@ def correct_spelling(prompt):
     list_of_words = prompt.split()
     spanish_spell_checker = SpellChecker(language='es')
     for word in list_of_words:
-        if spanish_spell_checker.correction(word) != word:
+        if spanish_spell_checker.correction(word) != word \
+            and spanish_spell_checker.correction(word) != '' \
+            and spanish_spell_checker.correction(word) is not None:
+                
             prompt = prompt.replace(word, spanish_spell_checker.correction(word))
     
     return prompt
+
+
+def convert_to_numeric(prompt):
+    return text_to_num.text2num(prompt)
     
 def main():
-    ...
+    print(transform_prompt('Quiero un carro rojo del año dos mil'))
+    # print(transform_prompt('un carro rojo'))
 
 
 if __name__ == '__main__':
-    print(transform_prompt('un carro rojo'))
+    main()
+    
