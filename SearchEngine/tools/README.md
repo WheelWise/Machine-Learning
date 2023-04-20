@@ -2,7 +2,7 @@
 
 ## databaseFaker.py
 
-This tool aims to generate a somehow "real" simulation of the NoSQL databse for the cars. You can use it from the command line and make two types of ouptputs :
+This tool aims to generate a somehow "real" simulation of the NoSQL database for the cars. You can use it from the command line and make two types of outputs :
 
 1. Create a fake database in your MongoDB local server
 

@@ -6,7 +6,7 @@ This is just a quick demo of how the Search Engine Works.
 
 In the server directory you will find two .py files, main.py is a server Flask that runs on port `8080` and creates an instance of SearchEngine and mounts it on top of the pretrained model found in ../src/models. Then, creates a Flask application that has a single `Search` route, there you can send a query from the frontend and it will return the elements of the mongo database.
 
-## Fronend
+## Frontend
 
 It is a small application made quickly with creat-react-app, which has in App.js the basic logic to be able to receive an input from the user and send it to the server to receive a list of cars.
 
