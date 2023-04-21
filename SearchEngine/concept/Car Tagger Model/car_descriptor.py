@@ -5,15 +5,8 @@ from typing import List
 
 
 class CarDescriptor:
-    def __init__(self):
-        self.cars_dict = {}
-
-    def add_car(self, name):
-        if name in self.cars_dict:
-            return
-        else:
-            self.cars_dict[name] = []
-        print("Car was added")
+    def __init__(self, descriptions_dict):
+        self.cars_dict = descriptions_dict
 
     def get_description(self, name):
         return self.cars_dict[name]
