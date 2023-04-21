@@ -1,12 +1,9 @@
-"""Alvaro Garcia A01781511
+"""Alvaro Garcia 
     Describe models 
 """
-import cars
+# import cars
 
 
+# pool_palabras = ["sedan", "coupe", "camioneta"]
 
-
-pool_palabras = ["sedan", "coupe", "camioneta"]
-
-def
-
+# def
