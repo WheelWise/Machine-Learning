@@ -1,0 +1,23 @@
+{
+    "car_type": [
+        "coupé",
+        "sedán",
+        "suv",
+        "auto",
+        "camioneta",
+        "troca",
+        "pick up",
+        "pickup"
+    ],
+    "transmission": ["manual", "automatico", "cvt", "semiautomatica"],
+    "size": ["pequeño, chico, mediano", "chico"],
+    "costo": ["barato", "premium", "economico", "de lujo"],
+    "space": ["espaciososo", "de carga"],
+    "characteristics": [
+        "hibrido",
+        "todo terreno",
+        "familiar",
+        "eléctrico",
+        "auto de trabajo"
+    ]
+}
