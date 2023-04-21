@@ -1,0 +1,114 @@
+[
+    {
+        "id": 1,
+        "price": 20000,
+        "make": "Toyota",
+        "model": "Camry",
+        "year": 2020,
+        "color": "silver",
+        "seats": 5,
+        "mpg": 29,
+        "description": []
+    },
+    {
+        "id": 2,
+        "price": 30000,
+        "make": "Honda",
+        "model": "Civic",
+        "year": 2021,
+        "color": "red",
+        "seats": 5,
+        "mpg": 36,
+        "description": []
+    },
+    {
+        "id": 3,
+        "price": 40000,
+        "make": "Tesla",
+        "model": "Model S",
+        "year": 2022,
+        "color": "white",
+        "range": "390 miles",
+        "top_speed": "200 mph",
+        "description": []
+    },
+    {
+        "id": 4,
+        "price": 15000,
+        "make": "Ford",
+        "model": "Fiesta",
+        "year": 2019,
+        "color": "blue",
+        "seats": 4,
+        "mpg": 32,
+        "description": []
+    },
+    {
+        "id": 5,
+        "price": 25000,
+        "make": "Chevrolet",
+        "model": "Camaro",
+        "year": 2020,
+        "color": "black",
+        "horsepower": 455,
+        "top_speed": "165 mph",
+        "description": []
+    },
+    {
+        "id": 6,
+        "price": 45000,
+        "make": "BMW",
+        "model": "M5",
+        "year": 2021,
+        "color": "gray",
+        "horsepower": 600,
+        "top_speed": "189 mph",
+        "seats": 5,
+        "description": []
+    },
+    {
+        "id": 7,
+        "price": 35000,
+        "make": "Audi",
+        "model": "A6",
+        "year": 2022,
+        "color": "blue",
+        "horsepower": 335,
+        "mpg": 25,
+        "description": []
+    },
+    {
+        "id": 8,
+        "price": 28000,
+        "make": "Nissan",
+        "model": "Altima",
+        "year": 2020,
+        "color": "silver",
+        "mpg": 28,
+        "seats": 5,
+        "description": []
+    },
+    {
+        "id": 9,
+        "price": 50000,
+        "make": "Mercedes-Benz",
+        "model": "E-Class",
+        "year": 2022,
+        "color": "black",
+        "horsepower": 362,
+        "mpg": 25,
+        "top_speed": "130 mph",
+        "description": []
+    },
+    {
+        "id": 10,
+        "price": 22000,
+        "make": "Hyundai",
+        "model": "Elantra",
+        "year": 2019,
+        "color": "red",
+        "seats": 5,
+        "mpg": 35,
+        "description": []
+    }
+]

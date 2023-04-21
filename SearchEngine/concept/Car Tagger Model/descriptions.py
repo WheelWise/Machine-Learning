@@ -1,9 +1,11 @@
 """Alvaro Garcia 
-    Describe models 
+    Describe models (not implemented yet) 
 """
-# import cars
+import cars
+from cars import cars_dict
+
+words_pull = ["sedan", "coupe", "camioneta"]
 
 
-# pool_palabras = ["sedan", "coupe", "camioneta"]
-
-# def
+def get_pull():
+    return words_pull
