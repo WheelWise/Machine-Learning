@@ -6,13 +6,12 @@
         "auto",
         "camioneta",
         "troca",
-        "pick up",
-        "pickup"
+        "pick up"
     ],
     "transmission": ["manual", "automatico", "cvt", "semiautomatica"],
-    "size": ["pequeño, chico, mediano", "chico"],
+    "size": ["pequeño", "chico", "mediano"],
     "costo": ["barato", "premium", "economico", "de lujo"],
-    "space": ["espaciososo", "de carga"],
+    "space": ["espaciososo", "de carga", "normal"],
     "characteristics": [
         "hibrido",
         "todo terreno",
