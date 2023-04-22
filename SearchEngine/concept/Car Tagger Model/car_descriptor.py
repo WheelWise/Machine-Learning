@@ -14,8 +14,9 @@ class CarDescriptor:
     def update_car(self, name, new_vals: List):
         if name not in self.cars_dict:
             return
-        if len(self.cars_dict[name]) < 50:
-            self.cars_dict[name].extend(new_vals)
+        if len(self.cars_dict[name]) == 0:
+            for new_val in new_vals:
+                self.cars_dict[name].extend(new_val)
             print("Car was updated")
         else:
             print("Car description complete")
@@ -25,8 +26,5 @@ class CarDescriptor:
             self.cars_dict.pop(name)
             print("Car was removed")
 
-
-# Testing
-# car_descriptor = CarDescriptor()
-# car_descriptor.add_car("Honda City MT")
-# print(car_descriptor.cars_dict)
+    def get_cars_dict(self):
+        return self.cars_dict

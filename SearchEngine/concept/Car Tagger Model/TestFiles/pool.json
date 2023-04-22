@@ -25,7 +25,13 @@
     "costo": [
         { "económico": ["barato", "económico"], "de lujo": ["lujo", "premium"] }
     ],
-    "espacio": ["normal", "espaciososo", "de carga"],
+    "espacio": [
+        {
+            "normal": ["normal"],
+            "espaciososo": ["espacioso"],
+            "de carga": ["de carga"]
+        }
+    ],
     "characteristicas": [
         {
             "deportivo": ["deportivo"],

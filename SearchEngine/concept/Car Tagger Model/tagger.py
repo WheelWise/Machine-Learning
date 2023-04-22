@@ -1,7 +1,6 @@
 import json
 from car_descriptor import CarDescriptor
 # Open the JSON file
-import json
 
 
 class Tagger:
@@ -10,8 +9,6 @@ class Tagger:
         self.pool_path = pool_path
         self.db_json = self.get_json(db_path)
         self.pool_json = self.get_json(pool_path)
-        self.translated_dict = None
-        self.choices = None
 
     # Open the JSON file
     def get_json(self, path):
@@ -29,7 +26,7 @@ class Tagger:
             description = obj['description']
             new_dict[model] = description
 
-        self.translated_dict = new_dict
+        return new_dict
 
     # Helps user to enrich the descriptions
     def add_description(self):
@@ -54,7 +51,6 @@ class Tagger:
                 else:
 
                     for idx2, (keyy, item) in enumerate(self.pool_json[key][0].items()):
-                        # print(len(self.pool_json[key][0]))
                         if key_input > 0 and key_input <= len(self.pool_json[key][0]):
                             if idx2 == key_input - 1:
                                 for i in item:
@@ -63,40 +59,17 @@ class Tagger:
                         else:
                             print("Fuera del rango, intenta otra vez")
 
-                    #     # for idx,
-
-                    #     temp.append(self.pool_json[key][key_input - 1])
-                    #     print("Added")
-                    #     print(temp)
-                    # else:
-                    #     print("Fuera del rango, intenta otra vez")
-                    #     continue
-                print(temp)
                 counter += 1
             choices.append(temp)
         desc_list = []
-        self.choices = choices
 
+        return choices
 
-def main():
-    db_path = './TestFiles/database.json'
-    pool_path = './TestFiles/pool.json'
-
-    tagger = Tagger(db_path, pool_path)
-
-    # tagger.translate_to_descriptor()
-    tagger.add_description()
-    print(tagger.translated_dict)
-    # print(tagger.choices)
-    # db_json = get_json(db_path)
-    # descriptions_dict = translate_to_descriptor(db_json)
-    # car_descriptor = CarDescriptor(descriptions_dict)
-
-    # # print(car_descriptor.get_description("Camry"))
-    # pool_path = './TestFiles/pool.json'
-    # new_descriptions = add_decription(pool_path)
-    # car_descriptor.update_car("Camry", ["
-    # "])Q
-
-
-main()
+    def write_changes(self, new_dict, car_name):
+        for dict in self.db_json:
+            if dict["model"] == car_name:
+                dict["description"] = new_dict[car_name]
+                # Open file for writing
+        with open(self.db_path, "w") as f:
+            # Write data to file
+            json.dump(self.db_json, f)
