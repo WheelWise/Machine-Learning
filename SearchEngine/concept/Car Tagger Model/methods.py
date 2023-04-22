@@ -4,14 +4,13 @@ Functions to hide basic methods's complexity"""
 
 from tagger import Tagger
 from car_descriptor import CarDescriptor
+DB_PATH = './TestFiles/database.json'
+POOL_PATH = './TestFiles/pool.json'
 
 
 def update_car(car_name):
 
-    db_path = './TestFiles/database.json'
-    pool_path = './TestFiles/pool.json'
-
-    tagger = Tagger(db_path, pool_path)
+    tagger = Tagger(DB_PATH, POOL_PATH)
     translated_dict = tagger.translate_to_descriptor()
     print(translated_dict)
     description_list = tagger.add_description()
@@ -24,4 +23,8 @@ def update_car(car_name):
     tagger.write_changes(new_dict, car_name)
 
 
-update_car("Camry")
+def get_description(car_name):
+    tagger = Tagger(DB_PATH, POOL_PATH)
+    translated_dict = tagger.translate_to_descriptor()
+    car_descriptor = CarDescriptor(translated_dict)
+    return car_descriptor.get_description(car_name)

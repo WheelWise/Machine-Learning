@@ -5,7 +5,9 @@ import methods
 
 
 def main():
-    methods.update_car("Camry")
+    car_name = "Camry"
+    methods.update_car(car_name)
+    description = methods.get_description(car_name)
 
 
 main()

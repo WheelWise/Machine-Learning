@@ -9,7 +9,8 @@ class CarDescriptor:
         self.cars_dict = descriptions_dict
 
     def get_description(self, name):
-        return self.cars_dict[name]
+        if self.cars_dict[name]:
+            return self.cars_dict[name]
 
     def update_car(self, name, new_vals: List):
         if name not in self.cars_dict:
