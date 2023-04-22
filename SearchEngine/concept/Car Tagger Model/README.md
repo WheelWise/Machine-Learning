@@ -1,19 +1,19 @@
-#Car Tagger
+# Car Tagger
 
 Program for describing the automobile database. Its purpose is to help integrate new cars into the search model.
 
-`main.py`
+#### `main.py`
 Where methods are called 
 
-`methods.py`
+#### `methods.py`
 Where method's complexity is
 hidden 
 
-`tagger.py`
+#### `tagger.py`
 Helps create tags for the cars
 and handles the database
 
-`car_descriptor.py`
+#### `car_descriptor.py`
 Handles description changes
 
 <i class="fa fa-folder"></i> `Test Files`
