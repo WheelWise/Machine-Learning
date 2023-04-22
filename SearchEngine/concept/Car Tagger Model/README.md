@@ -5,9 +5,9 @@ Program for describing the automobile database. Its purpose is to help integrate
 ####`main.py`
 Where methods are called ####`methods.py`
 Where method's complexity is
+hidden 
 
-hidden ####`tagger.py`
-
+####`tagger.py`
 Helps create tags for the cars
 and handles the database
 
