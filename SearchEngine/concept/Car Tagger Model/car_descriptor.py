@@ -14,7 +14,7 @@ class CarDescriptor:
     def update_car(self, name, new_vals: List):
         if name not in self.cars_dict:
             return
-        if len(self.cars_dict[name]) < 3:
+        if len(self.cars_dict[name]) < 50:
             self.cars_dict[name].extend(new_vals)
             print("Car was updated")
         else:

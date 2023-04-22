@@ -1,22 +1,37 @@
 {
-    "car_type": [
-        "coupé",
-        "sedán",
-        "suv",
-        "auto",
-        "camioneta",
-        "troca",
-        "pick up"
+    "tipo de coche": [
+        {
+            "coupe": ["coupe"],
+            "sedan": ["sedan"],
+            "camioneta": ["camioneta"],
+            "suv": ["suv"],
+            "pick up": ["pick up", "pickup", "troca"]
+        }
     ],
-    "transmission": ["manual", "automatico", "cvt", "semiautomatica"],
-    "size": ["pequeño", "chico", "mediano"],
-    "costo": ["barato", "premium", "economico", "de lujo"],
-    "space": ["espaciososo", "de carga", "normal"],
-    "characteristics": [
-        "hibrido",
-        "todo terreno",
-        "familiar",
-        "eléctrico",
-        "auto de trabajo"
+    "transmisión": [
+        {
+            "manual": ["manual", "estándar", "standar"],
+            "automatico": ["automatico", "estándar", "cvt"],
+            "semiautomatico": ["semiautomatico"]
+        }
+    ],
+    "tamaño": [
+        {
+            "chico": ["chico", "pequeño", "chiquito"],
+            "mediano": ["mediano", "normal"],
+            "grande": ["grande"]
+        }
+    ],
+    "costo": [
+        { "económico": ["barato", "económico"], "de lujo": ["lujo", "premium"] }
+    ],
+    "espacio": ["normal", "espaciososo", "de carga"],
+    "characteristicas": [
+        {
+            "deportivo": ["deportivo"],
+            "todo terreno": ["todo terreno"],
+            "electrico": ["electrico", "eficiente"],
+            "hibrido": ["electrico", "eficiente"]
+        }
     ]
 }
