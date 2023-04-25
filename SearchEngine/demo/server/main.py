@@ -24,7 +24,7 @@ app = Flask("Search Engine Demo")
 cors = CORS(app)
 
 mySearcher = SearchEngine(embed, carParser, 768)
-mySearcher.load("../../src/models/tt.ann")
+mySearcher.load("../../models/test.ann")
 
 client = MongoClient("mongodb://localhost:27017/")
 database = client["test"]

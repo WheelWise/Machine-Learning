@@ -83,8 +83,8 @@ if __name__ == "__main__":
     database = readDatabase("mongodb://localhost:27017/", "test", "cars")
     mySearcher = SearchEngine(embed, carParser, 768)
     mySearcher.buildKnowledgeFromDb(database)
-    mySearcher.build(100)
-    mySearcher.save("./models/test.ann")
+    mySearcher.build(200)
+    mySearcher.save("../models/test.ann")
     while True:
         answer = input("New Search ? (Y/n) ")
         if answer.lower() == "n":
