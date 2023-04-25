@@ -5,9 +5,13 @@ import methods
 
 
 def main():
-    car_name = "Camry"
-    methods.update_car(car_name)
-    description = methods.get_description(car_name)
+    while True:
+        x = input("New query ? (Y/n): ")
+        if x.lower() == "n":
+            break
+        string = input("Carro : ")
+        methods.update_car(string)
+        description = methods.get_description(string)
 
 
 main()
