@@ -2,6 +2,30 @@
 
 This is the search engine implementation for the WheelWise platform, if you want to know a little more about how we came up with it, you can visit the directory called `concept`.
 
+## Getting started
+
+Each directory has a readme which talks a bit more about how to run each model, tool or server. We have created a conda environment to make sure we all use the same packages. Please make sure you setup your own env.
+
+1. Install `mini-conda` available [here](https://docs.conda.io/en/latest/miniconda.html).
+
+2. Navigate where you have cloned this repository.
+
+3. Change directory to SearchEngine.
+
+`cd SearchEngine`
+
+4. Create the conda environment.
+
+`conda env create -f environment.yml`
+
+5. Activate the env.
+
+`conda activate search-engine`
+
+6. You are ready to hack! Make sure you activate and desactivate the en with :
+
+`conda deactivate search-engine`
+
 ## How it works ?
 
 Basically we propose to represent each car in our database as a vector, to later be able to represent them as a point in space. The user's search can also be represented as a vector of the same dimensions, so we can apply the [KNN](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) algorithm, which will allow us to calculate the "closest" cars to the search vector.
