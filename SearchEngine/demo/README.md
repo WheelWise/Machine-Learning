@@ -22,7 +22,7 @@ It is a small application made quickly with creat-react-app, which has in App.js
 
 ```
 # make sure you are in the /tools dir
-python3 databaseFaker.py mongodb://localhost:27017 test cars 2000
+python3 database_faker.py mongodb://localhost:27017 test cars 2000
 ```
 
 4. Now you can train a SearchEngine object running the annoy model :

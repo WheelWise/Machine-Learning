@@ -10,7 +10,7 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer("all-mpnet-base-v2")
 
 
-def embed(sentence: str) -> list:
+def embed(sentence: str):
     return model.encode([sentence])[0]
 
 
@@ -42,18 +42,17 @@ def carParser(car) -> str:
 
 # Libaries for the SearchEngine model
 import numpy as np
+import pickle
 from sklearn.neighbors import NearestNeighbors
 
 
 class SearchEngine:
     # Constructor that accepts the embedder (imported from tf_hub, function to parse the cars and how many neigbors )
-    def __init__(self, embedder, preprocessor, neighbors) -> None:
+    def __init__(self, embedder, preprocessor, neigbors) -> None:
+        self.model = NearestNeighbors(n_neighbors=neigbors, metric="cosine")
         self.embedder = embedder
-        self.knowledge = []
-        self.knowledgeSize = 0
-        self.labels = []
-        self.model = NearestNeighbors(n_neighbors=neighbors, metric="cosine")
         self.preprocessor = preprocessor
+        self.knowledge = []
 
     # Fucntion to iterate over an array of objects, parse them and build knowledge
     def buildKnowledgeFromDb(self, database) -> None:
@@ -61,23 +60,19 @@ class SearchEngine:
         for item in database:
             sentence = self.preprocessor(item)
             self.knowledge.append(np.array(self.embedder(sentence)))
-            self.labels.append(self.knowledgeSize)
-            self.knowledgeSize += 1
         end = time()
         print(f"Time taken to process database : {end - start} seconds")
 
     # Fucntion to read one object, parse it and build knowledge
     def addKnowledge(self, item) -> None:
-        id, sentence = self.preprocessor(item)
-        self.knowledge.append(np.array(self.embedder(sentence)))
-        self.labels.append(id)
+        pass
 
     # Function to train the knn model with the actual knowledge
     def fit(self) -> None:
         start = time()
         self.model.fit(self.knowledge)
         end = time()
-        print(f"Time taken to train knn: {end - start} seconds")
+        print(f"Time taken to build knn: {end - start} seconds")
 
     # Main function to make search over the db, it returns an array of indexes of the db
     def search(self, string) -> list:
@@ -91,8 +86,8 @@ class SearchEngine:
 
 if __name__ == "__main__":
     # Lines to instatiate the functions and objects described before
-    database = readDatabase("mongodb://localhost:27017/", "Test", "cars")
-    mySearcher = SearchEngine(embed, carParser, 3)
+    database = readDatabase("mongodb://localhost:27017/", "test", "cars")
+    mySearcher = SearchEngine(embed, carParser, 10)
     mySearcher.buildKnowledgeFromDb(database)
     mySearcher.fit()
     while True:
