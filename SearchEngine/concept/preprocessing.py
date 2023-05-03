@@ -1,33 +1,68 @@
 """ 
 Natural Language Preprocessing
 By : Rodrigo Mendoza
+
+    Packages to install:
+        pip install googletrans==3.1.0a0
+        pip install -U pip setuptools wheel
+        pip install -U spacy
+        python -m spacy download es_core_news_sm
+        pip install nltk
+        pip install pyspellchecker
 """
-
-
 import re
-# pip install googletrans==3.1.0a0
 from googletrans import Translator
-# lemmatisation
-# pip install -U pip setuptools wheel
-# pip install -U spacy
-# python -m spacy download es_core_news_sm
 import spacy
-# stemming
-# pip install nltk
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk import download
-# import nltk
-
-# pip install pyspellchecker
 from spellchecker import SpellChecker
-# siguiente paso convertir de caracter a numerico (ex. cinco -> 5)
-# text_to_num.py
 import text_to_num
+from functools import lru_cache
+
+# Download NLTK resources
+download('stopwords')
+SPANISH_STOPWORDS = stopwords.words('spanish')
+
+# Load spaCy model
+NLP = spacy.load("es_core_news_sm")
+
+# Load additional stopwords
+with open('spanish_stopwords.txt', 'r') as file:
+    ADDITIONAL_STOPWORDS = file.read().splitlines()
+STOPWORDS = SPANISH_STOPWORDS + ADDITIONAL_STOPWORDS
+
+# Load car makes and models
+with open('car_makes.txt', 'r') as file:
+    car_makes = file.read().splitlines()
+with open('car_models.txt', 'r') as file:
+    car_models = file.read().splitlines()
+CAR_MODEL_MAKES = car_makes + car_models
+
+# Create spellchecker instance
+SPANISH_SPELL_CHECKER = SpellChecker(language='es')
+
+# Regex compilations for additional performance
+EMAIL_PATTERN = re.compile(r'\S*@\S*\s?')
+MENTION_PATTERN = re.compile(r'@\S*\s?')
+URL_PATTERN = re.compile(r'http\S+|www.\S+')
+# symbols_punctuations_pattern = re.compile(r'\?|\\|\!|\"|\#|\$|\%|\&|\'|\[|\^|\||\,|\¿|\¡|\_|\=|\>|\[|\^|\`|\{
+# |\}|\~|\[|\]|\*|\+|\@|\/|\-|\:|\?|\¡|\¿||\.|\\|\“|\”|\(|\)|\;|\’|\;|\`|\´|\-|\·|\<|\º|\ª')
+SYMBOL_PATTERN = re.compile(r'[^\w\sñ]')
+SPECIAL_CASE_1 = re.compile(r'\nd')
+SPECIAL_CASE_2 = re.compile(r'\n')
+HASTAG_PATTERN = re.compile(r'\B(\#[a-zA-Z]+\b)(?!;)')
+WORD_LENGTH_PATTERN = re.compile(r'\b\w{1,2}\b')
+A_ACCENT_PATTERN = re.compile(r'[áàäâ]')
+E_ACCENT_PATTERN = re.compile(r'[éèëê]')
+I_ACCENT_PATTERN = re.compile(r'[íìïî]')
+O_ACCENT_PATTERN = re.compile(r'[óòöô]')
+U_ACCENT_PATTERN = re.compile(r'[úùüû]')
+ALPHA_NUMERIC_PATTERN = re.compile(r'[^a-zA-Z\d|\s|ñ]')
 
 
+@lru_cache(maxsize=None)
 def transform_prompt(prompt):
-    download('stopwords')
     prompt = strip_formatting(prompt)
     # prompt = translate_prompt(prompt)
     prompt = correct_spelling(prompt)
@@ -40,36 +75,16 @@ def transform_prompt(prompt):
 
 
 def strip_formatting(prompt):
-    # exclude emails
-    prompt = re.sub(r'\S*@\S*\s?', '', prompt)
-    # Exclude mentions
-    prompt = re.sub(r'@\S*\s?', '', prompt)
-    # exclude urls
-    prompt = re.sub(r'http\S+|www.\S+', '', prompt)
-    # Exclude symbols or punctuations
-    prompt = re.sub(
-        r'\?|\\|\!|\"|\#|\$|\%|\&|\'|\[|\^|\||\,|\¿|\¡|\_|\=|\>|\[|\^|\`|\{|\}|\~|\[|\]|\*|\+|\@|\/|\-|\:|\?|\¡|\¿||\.|\\|\“|\”|\(|\)|\;|\’|\;|\`|\´|\-|\·|\<|\º|\ª',
-        '', prompt)
-    # Exclude special case symbol '\nd'
-    prompt = re.sub(r'\nd', '', prompt)
-    # Exclude special case symbol '\n'
-    prompt = re.sub(r'\n', '', prompt)
-    # Exclude cases of hashtags
-    prompt = re.sub(r'\B(\#[a-zA-Z]+\b)(?!;)', '', prompt)
-
-    # Lower Case process
     prompt = prompt.lower()
-    # Eliminate words length <= 2
-    prompt = re.sub(r'\b\w{1,2}\b', '', prompt)
-    # quitar acentos
-    prompt = re.sub(r'[áàäâ]', 'a', prompt)
-    prompt = re.sub(r'[éèëê]', 'e', prompt)
-    prompt = re.sub(r'[íìïî]', 'i', prompt)
-    prompt = re.sub(r'[óòöô]', 'o', prompt)
-    prompt = re.sub(r'[úùüû]', 'u', prompt)
-    # Consider only alphanumeric
+    replace_to_blank = [EMAIL_PATTERN, MENTION_PATTERN, URL_PATTERN, SYMBOL_PATTERN, SPECIAL_CASE_1, SPECIAL_CASE_2,
+                        HASTAG_PATTERN, WORD_LENGTH_PATTERN, ALPHA_NUMERIC_PATTERN]
+    for pattern in replace_to_blank:
+        prompt = pattern.sub('', prompt)
 
-    prompt = re.sub(r'[^a-zA-Z0-9|\s|ñ]', '', prompt)
+    replace_to_word = [A_ACCENT_PATTERN, E_ACCENT_PATTERN, I_ACCENT_PATTERN, O_ACCENT_PATTERN, U_ACCENT_PATTERN]
+    word_to_replace = ['a', 'e', 'i', 'o', 'u']
+    for pattern in replace_to_word:
+        prompt = pattern.sub(word_to_replace[replace_to_word.index(pattern)], prompt)
 
     return prompt
 
@@ -86,45 +101,24 @@ def stem_prompt(prompt):
 
 
 def lemmatize_prompt(prompt):
-    nlp = spacy.load("es_core_news_sm")
-    nlp_prompt = nlp(prompt)
+    nlp_prompt = NLP(prompt)
     # open cars makes and models to excluse them from the lemmatization
-    with open('car_makes.txt', 'r') as file:
-        car_makes = file.read().splitlines()
-    with open('car_models.txt', 'r') as file:
-        car_models = file.read().splitlines()
-    prompt = ' '.join([word.lemma_ if word.text not in car_makes + car_models else word.text for word in nlp_prompt])
+    prompt = ' '.join([word.lemma_ if word.text not in CAR_MODEL_MAKES else word.text for word in nlp_prompt])
     return prompt
 
 
 def remove_stopwords(prompt):
-    with open('spanish_stopwords.txt', 'r') as file:
-        additional_stopwords = file.read().splitlines()
-    additional_stopwords += ['querer', 'ser', 'encantar']
     words = re.findall(r'\w+', prompt, flags=re.UNICODE)
-    important_words = []
-    for word in words:
-        if word not in stopwords.words('spanish') + additional_stopwords:
-            important_words.append(word)
+    important_words = (word for word in words if word not in STOPWORDS)
     prompt = ' '.join(important_words)
     return prompt
 
 
 def correct_spelling(prompt):
-    with open('car_makes.txt', 'r') as file:
-        car_makes = file.read().splitlines()
-    with open('car_models.txt', 'r') as file:
-        car_models = file.read().splitlines()
-    car_models_makes = car_makes + car_models
     list_of_words = prompt.split()
-    spanish_spell_checker = SpellChecker(language='es')
-    for word in list_of_words:
-        if word not in car_models_makes:
-            if spanish_spell_checker.correction(word) != word \
-                    and spanish_spell_checker.correction(word) != '' \
-                    and spanish_spell_checker.correction(word) is not None:
-                prompt = prompt.replace(word, spanish_spell_checker.correction(word))
-
+    corrections = {word: SPANISH_SPELL_CHECKER.correction(word) for word in list_of_words if
+                   word not in CAR_MODEL_MAKES}
+    prompt = ' '.join([corrections.get(word, word) for word in list_of_words])
     return prompt
 
 
@@ -134,7 +128,6 @@ def convert_to_numeric(prompt):
 
 def main():
     print(transform_prompt('Quiero un carro rojo del año dos mil Nissan atlas'))
-    # print(transform_prompt('un carro rojo'))
 
 
 if __name__ == '__main__':

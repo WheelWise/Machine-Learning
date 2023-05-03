@@ -922,3 +922,6 @@ querer
 ser
 encantar
 buscar
+querer
+ser
+encantar
