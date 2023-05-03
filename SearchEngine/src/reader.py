@@ -3,6 +3,7 @@ Agency utilities for uploading catalog (csv or indiviudal)
 By Sebastian Mora (@bastian1110)
 """
 import csv
+import time
 from pymongo import MongoClient
 from sentence_transformers import SentenceTransformer
 
@@ -40,10 +41,11 @@ class Reader:
         self.db = self.client[db_name]
         self.embed = embed
         self.sentencer = sentencer
-        self.protected_names = ["modelo", "año"]
+        self.protected_names = ["Modelo", "Año"]
 
     # Function for reading a csv file conatining lots of cars
     def read_from_csv(self, path, agency) -> str:
+        start = time.time()
         collection = self.db["autos"]
         with open(path, "r") as f:
             dict_reader = csv.DictReader(f)
@@ -57,9 +59,10 @@ class Reader:
                 row["agency"] = agency  # This should be replaced with the SQL agency id
                 collection.insert_one(row)
                 n_objects += 1
-            return f"Succesfully added {n_objects} objects to the database"
+            end = time.time()
+            return f"Succesfully added {n_objects} objects to the database, in {end -start} seconds"
 
 
 if __name__ == "__main__":
     my_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
-    print(my_reader.read_from_csv("test.csv", "nissan"))
+    print(my_reader.read_from_csv("nissan_catalogo.csv", "0"))
