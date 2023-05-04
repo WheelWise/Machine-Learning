@@ -1,4 +1,4 @@
-# Wheel Wise - Research Repository
+# Wheel Wise - Research Repository 💀
 
 Welcome to the research repository of Wheel Wise, a car selling platform for agencies to clients. This repository contains all the research materials and findings related to the project, including those related to machine learning, human-machine interaction, and other technologies.
 
