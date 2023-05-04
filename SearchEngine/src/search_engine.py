@@ -14,33 +14,8 @@ def embed(sentence: str):
     return model.encode([sentence])[0]
 
 
-# Functions for reading the database and parsing the cars
-from pymongo import MongoClient
-
-
-def readDatabase(url: str, database: str, collection: str) -> list:
-    client = MongoClient(url)
-    database = client[database]
-    col = database[collection]
-    cursor = col.find({})
-    data = []
-    for document in cursor:
-        data.append(document)
-    return data
-
-
-def carParser(car) -> str:
-    words = []
-    for key in car:
-        if not isinstance(car[key], str):
-            keyDescriber = " ".join(key.split("_"))
-            words.append((keyDescriber + " " + str(car[key])).lower())
-            continue
-        words.append(car[key].lower())
-    return " ".join(words[1:])
-
-
 # Libaries for the SearchEngine model
+from pymongo import MongoClient
 import numpy as np
 import pickle
 from sklearn.neighbors import NearestNeighbors
@@ -48,20 +23,26 @@ from sklearn.neighbors import NearestNeighbors
 
 class SearchEngine:
     # Constructor that accepts the embedder (imported from tf_hub, function to parse the cars and how many neigbors )
-    def __init__(self, embedder, preprocessor, neigbors) -> None:
+    def __init__(self, embedder, neigbors) -> None:
         self.model = NearestNeighbors(n_neighbors=neigbors, metric="cosine")
         self.embedder = embedder
-        self.preprocessor = preprocessor
+        self.indexes = {}
         self.knowledge = []
+        self.knowledge_size = 0
 
-    # Fucntion to iterate over an array of objects, parse them and build knowledge
-    def buildKnowledgeFromDb(self, database) -> None:
+    # Fucntion to iterate over an array of objects and build knowledge
+    def get_knowledge(self, url: str, database: str) -> None:
         start = time()
-        for item in database:
-            sentence = self.preprocessor(item)
-            self.knowledge.append(np.array(self.embedder(sentence)))
+        client = MongoClient(url)
+        database = client[database]
+        collection = database["autos"]
+        documents = collection.find({"estado": "stock"}, {"_id": 1, "vector": 1})
+        for document in documents:
+            self.knowledge.append(np.array(document["vector"]))
+            self.indexes[self.knowledge_size] = document["_id"]
+            self.knowledge_size += 1
         end = time()
-        print(f"Time taken to process database : {end - start} seconds")
+        print(f"Total : {self.knowledge_size} added in {end-start} seconds")
 
     # Fucntion to read one object, parse it and build knowledge
     def addKnowledge(self, item) -> None:
@@ -80,19 +61,18 @@ class SearchEngine:
         embeded = np.array(self.embedder(string.lower()))
         distances, indices = self.model.kneighbors([embeded])
         for i in range(len(indices[0])):
-            res.append(indices[0][i] + 1)
+            res.append(self.indexes[indices[0][i]])
         return res
 
 
 if __name__ == "__main__":
     # Lines to instatiate the functions and objects described before
-    database = readDatabase("mongodb://localhost:27017/", "test", "cars")
-    mySearcher = SearchEngine(embed, carParser, 10)
-    mySearcher.buildKnowledgeFromDb(database)
-    mySearcher.fit()
+    my_searcher = SearchEngine(embed, 10)
+    my_searcher.get_knowledge("mongodb://localhost:27017", "test")
+    my_searcher.fit()
     while True:
         answer = input("New Search ? (Y/n) ")
-        if answer.lower() != "y":
+        if answer.lower() == "n":
             break
         test = input("Busqueda : ")
-        print("Resultado : ", mySearcher.search(test))
+        print("Resultado : ", my_searcher.search(test))
