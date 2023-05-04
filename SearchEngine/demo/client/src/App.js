@@ -5,6 +5,8 @@ function App() {
   let [query, setQuery] = useState("");
   let [result, setResult] = useState([]);
 
+  let [auto, setAuto] = useState(false);
+
   const search = () => {
     axios
       .post(
@@ -38,6 +40,7 @@ function App() {
         <button onClick={search} className="btn btn-outline btn-success mx-2">
           Buscar
         </button>
+        <div><button onClick={()=> {setAuto(!auto); setQuery(query + " automatico")}} className={`hover:bg-slate-300 bg-slate-200 ${auto ? "bg-blue-400" : ""} py-2 px-3 rounded-xl my-2`}>X automatico</button></div>
       </div>
 
       <div className="col-span-6 grid grid-cols-6 m-8 mt-12">
