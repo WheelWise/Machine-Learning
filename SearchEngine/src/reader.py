@@ -57,6 +57,7 @@ class Reader:
                 description = self.sentencer(row)
                 row["vector"] = self.embed(description)
                 row["agency"] = agency  # This should be replaced with the SQL agency id
+                row["estado"] = "stock"
                 collection.insert_one(row)
                 n_objects += 1
             end = time.time()
