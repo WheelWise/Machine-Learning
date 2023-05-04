@@ -925,3 +925,4 @@ buscar
 querer
 ser
 encantar
+necesitar
