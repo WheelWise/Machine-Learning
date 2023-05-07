@@ -70,6 +70,7 @@ if __name__ == "__main__":
     my_searcher = SearchEngine(embed, 10)
     my_searcher.get_knowledge("mongodb://localhost:27017", "test")
     my_searcher.fit()
+    # _id: { $in: []}
     while True:
         answer = input("New Search ? (Y/n) ")
         if answer.lower() == "n":
