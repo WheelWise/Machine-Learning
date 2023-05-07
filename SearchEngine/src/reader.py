@@ -66,4 +66,4 @@ class Reader:
 
 if __name__ == "__main__":
     my_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
-    print(my_reader.read_from_csv("nissan_catalogo.csv", "0"))
+    print(my_reader.read_from_csv("ford_catalogo.csv", "0"))

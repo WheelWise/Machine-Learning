@@ -1,0 +1,21 @@
+{
+    "fusion": [
+        "economico",
+        "rapido",
+        "deportivo",
+        "ciudad",
+        "pequeno"
+    ],
+    "explorer": [
+        "camioneta",
+        "grande",
+        "exploracion",
+        "off-road"
+    ],
+    "centra": [
+        "sedan",
+        "rapido",
+        "ciudad",
+        "economico"
+    ]
+}
