@@ -79,13 +79,28 @@ class Tagger:
                             if idx2 == key_input - 1:
                                 for i in item:
                                     temp.append(i)
+                                
                         else:
                             print("Fuera del rango, intenta otra vez")
-
+                    break
                 counter += 1
             choices.append(temp)
         desc_list = []
 
+        #Allow user to describe vehicle
+        print("Want to describe vehicle with another words? Y/N")
+        key_input = input()
+        if key_input == "Y":
+            print("Introduce words to describe the vehicle and press enter: Up to 15 words (in spanish and -1 to stop adding words)")
+            i = 0
+            temp2 = []
+            while i < 15:
+                key_input = input()
+                if key_input == "-1":
+                    break
+                temp2.append(key_input)
+            choices.append(temp2)
+        print(choices)
         return choices
 
     def write_changes(self, new_dict, car_name):

@@ -20,7 +20,7 @@ class CarDescriptor:
                 self.cars_dict[name].extend(new_val)
             print("Car was updated")
         else:
-            print("Car description complete")
+            print("This car had already a description")
 
     def remove_car(self, name):
         if name in self.cars_dict:

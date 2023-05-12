@@ -23,7 +23,7 @@
         }
     ],
     "costo": [
-        { "económico": ["barato", "económico"], "de lujo": ["lujo", "premium"] }
+        { "económico": ["barato", "economico"], "de lujo": ["lujo", "premium"] }
     ],
     "espacio": [
         {
