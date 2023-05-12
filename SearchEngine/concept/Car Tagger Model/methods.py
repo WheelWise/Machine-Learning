@@ -11,6 +11,7 @@ POOL_PATH = './TestFiles/pool.json'
 def update_car(car_name):
 
     tagger = Tagger(DB_PATH, POOL_PATH)
+    tagger.get_pool_from_db()
     translated_dict = tagger.translate_to_descriptor()
     print(translated_dict)
     description_list = tagger.add_description()
@@ -21,6 +22,7 @@ def update_car(car_name):
     print(car_descriptor.get_description(car_name))
     new_dict = car_descriptor.get_cars_dict()
     tagger.write_changes(new_dict, car_name)
+    
 
 
 def get_description(car_name):

@@ -1,5 +1,8 @@
 import json
+import pymongo
 from car_descriptor import CarDescriptor
+
+from config import DB_HOST, DB_NAME, DB_COLLECTION
 # Open the JSON file
 
 
@@ -8,7 +11,7 @@ class Tagger:
         self.db_path = db_path
         self.pool_path = pool_path
         self.db_json = self.get_json(db_path)
-        self.pool_json = self.get_json(pool_path)
+        self.pool_json = self.get_pool_from_db()
 
     # Open the JSON file
     def get_json(self, path):
@@ -16,6 +19,25 @@ class Tagger:
             # Load the contents of the file as a Python object
             data = json.load(file)
             return data
+
+    def get_pool_from_db(self):
+    
+        # establecer la conexión con el servidor MongoDB
+        client = pymongo.MongoClient(DB_HOST)
+
+        # acceder a una base de datos específica en MongoDB
+        db = client[DB_NAME]
+
+        # acceder a una colección específica en la base de datos
+        collection = db[DB_COLLECTION]
+        cursor = collection.find({})
+        result = next(cursor)
+
+        #Remove id from dict
+        new_dict = {key: value for key, value in result.items() if key != "_id"}
+        
+        return new_dict
+        
 
     # Creates dictionary from json database with only key info
     def translate_to_descriptor(self):
@@ -33,8 +55,9 @@ class Tagger:
         descriptions = []
 
         choices = []
-        print("Introduce los índices que describan a tu auto")
-        print("-1 para dejar de ingresar datos")
+        print("Introduce el índice que mejor describa a tu auto")
+        print("Si en  una categoria ninguna opción describe tu auto, no hace falta agregarla")
+     
         for key in self.pool_json:
             temp = []
             print("Categoría: ", key)
@@ -44,18 +67,18 @@ class Tagger:
                     print(idx+1, val)
             counter = 0
             while (counter <= len(self.pool_json[key][0])):
-                key_input = int(input())
+                key_input = input()
 
-                if key_input == -1:
+                if key_input == "":
+
                     break
                 else:
-
+                    key_input = int(key_input)
                     for idx2, (keyy, item) in enumerate(self.pool_json[key][0].items()):
                         if key_input > 0 and key_input <= len(self.pool_json[key][0]):
                             if idx2 == key_input - 1:
                                 for i in item:
                                     temp.append(i)
-
                         else:
                             print("Fuera del rango, intenta otra vez")
 

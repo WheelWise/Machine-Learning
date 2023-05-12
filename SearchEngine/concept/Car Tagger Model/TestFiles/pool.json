@@ -8,10 +8,10 @@
             "pick up": ["pick up", "pickup", "troca"]
         }
     ],
-    "transmisión": [
+    "transmision": [
         {
-            "manual": ["manual", "estándar", "standar"],
-            "automatico": ["automatico", "estándar", "cvt"],
+            "manual": ["manual", "estandar", "standar"],
+            "automatico": ["automatico", "cvt"],
             "semiautomatico": ["semiautomatico"]
         }
     ],
