@@ -100,7 +100,7 @@ class Tagger:
                     break
                 temp2.append(key_input)
             choices.append(temp2)
-        print(choices)
+
         return choices
 
     def write_changes(self, new_dict, car_name):
@@ -111,3 +111,5 @@ class Tagger:
         with open(self.db_path, "w") as f:
             # Write data to file
             json.dump(self.db_json, f)
+
+        print(car_name + "description" + "updated")
