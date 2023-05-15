@@ -1,4 +1,6 @@
-# WW Natural Language Search Engine 😶‍🌫️
+# W.H.E.E.L.I.E. 🫥
+
+## Wide and Highly Efficient Engine for Listing and Intelligent Exploration
 
 This is the search engine implementation for the WheelWise platform, if you want to know a little more about how we came up with it, you can visit the directory called `concept`.
 
