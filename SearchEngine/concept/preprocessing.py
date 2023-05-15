@@ -1,4 +1,4 @@
-""" 
+"""
 Natural Language Preprocessing
 By : Rodrigo Mendoza
 
@@ -27,9 +27,9 @@ download('stopwords')
 SPANISH_STOPWORDS = stopwords.words('spanish')
 
 # Load spaCy accurate model
-NLP = spacy.load('es_dep_news_trf')
+# NLP = spacy.load('es_dep_news_trf')
 # Load spaCy efficient model
-# NLP = spacy.load('es_core_news_sm')
+NLP = spacy.load('es_core_news_sm')
 
 # Load additional stopwords
 with open('spanish_stopwords.txt', 'r') as file:
@@ -92,8 +92,6 @@ def strip_formatting(prompt):
     for pattern in replace_to_blank:
         prompt = pattern.sub('', prompt)
 
-
-
     return prompt
 
 
@@ -110,7 +108,6 @@ def stem_prompt(prompt):
 
 def lemmatize_prompt(prompt):
     nlp_prompt = NLP(prompt)
-
     # open cars makes and models to excluse them from the lemmatization
 
     prompt = ' '.join([word.lemma_ if word.text not in CAR_MODEL_MAKES else word.text for word in nlp_prompt])
@@ -131,12 +128,11 @@ def correct_spelling(prompt):
                    word not in CAR_MODEL_MAKES}
     prompt = ' '.join([corrections.get(word, word) for word in list_of_words])"""
 
-    """corrections = {word: TOOL.correct(word) if TOOL.correct(word) is not None
-                   else word for word in list_of_words if
+    corrections = {word: TOOL.correct(word) if TOOL.correct(word) is not None
+    else word for word in list_of_words if
                    word not in CAR_MODEL_MAKES}
     prompt = ' '.join([corrections.get(word, word) for word in list_of_words])
-    """
-    prompt = TOOL.correct(prompt)
+
     return prompt
 
 
@@ -147,14 +143,13 @@ def convert_to_numeric(prompt):
 def main():
     start = timeit.default_timer()
 
-
-
     print(transform_prompt(
-        "Quiero un carro de cinco puertas que sea de la marca Toyota, con asientos de cuero y un sistema de sonido de alta calidad."))
+        "Quiero un coche familiar que sea amplio y cómodo para viajes largos, con un sistema de entretenimiento para los pasajeros traseros y que sea de color azul."))
 
     stop = timeit.default_timer()
 
     print('Time: ', stop - start)
+
 
 if __name__ == '__main__':
     main()
