@@ -2,10 +2,13 @@
 WW Search Engine Server 
 By : Sebastian Mora (@bastian1110)
 """
+from pipe.reader import Reader
+from pipe.utils import embed, make_sentence
 from flask import Flask, request, jsonify, session
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 from uuid import uuid4
+import csv
 import os
 
 
@@ -21,7 +24,7 @@ def upload():
     try:
         file = request.files["file"]
     except:
-        return jsonify({"message": "Error, no file received", "error": True}), 403
+        return jsonify({"message": "Error, no file received", "error": True}), 400
 
     file_name = uuid4()
     file.save(f"./temp/{file_name}.csv")
@@ -33,7 +36,7 @@ def upload():
                 jsonify(
                     {
                         "message": "File saved successfully!",
-                        "lines": len(lines),
+                        "lines": len(lines) - 1,
                         "id": file_name,
                         "error": False,
                     }
@@ -43,7 +46,7 @@ def upload():
         os.remove(f"./temp/{file_name}.csv")
         return (
             jsonify({"message": "Missing header <modelo>", "error": True}),
-            402,
+            400,
         )
 
 
@@ -51,21 +54,28 @@ def upload():
 def cancel():
     file = request.values.get("file_id")
     if not file:
-        return jsonify({"message": "Error, no file key received", "error": True}), 403
+        return jsonify({"message": "Error, no file key received", "error": True}), 400
 
     try:
         os.remove(f"./temp/{file}.csv")
+        return jsonify({"message": "File deleted succesfully", "error": False}), 200
     except:
-        return jsonify({"message": "Error deleting the file", "error": True}), 404
+        return jsonify({"message": "Error deleting the file", "error": True}), 500
 
 
 @socketio.on("start-processing")
 def handle_start_processing(data):
+    temp_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
     with open(f'./temp/{data["fileId"]}.csv', "r") as f:
-        for i, line in enumerate(f):
-            emit("progress", {"number": i})
-            socketio.sleep(0.01)
+        dict_reader = csv.DictReader(f)
+        line = 1
+        for row in dict_reader:
+            temp_reader.read_row(row, "0")
+            emit("progress", {"number": line})
+            line += 1
+    temp_reader.push_to_db()
     os.remove(f'./temp/{data["fileId"]}.csv')
+    del temp_reader
 
 
 if __name__ == "__main__":

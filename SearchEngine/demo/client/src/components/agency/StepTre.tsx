@@ -13,11 +13,11 @@ export default function StepTre({ onCancel }: Props) {
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              strokeWidth="2"
               stroke="currentColor"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               {" "}
               <path stroke="none" d="M0 0h24v24H0z" />{" "}
@@ -42,10 +42,10 @@ export default function StepTre({ onCancel }: Props) {
             Felicidades! <i className="text-violet-600">Wheelie</i> Ha aprendido
             y analizado el archivo que le diste, ahora tus vehiculos apareceran
             en las busquedas de todos los usuarios. <br /> <br />
-            <p className="text-xs ">
+            <span className="text-xs ">
               Los autos se han añadidos al dashboard de tu catalogo, usalo
               sabiamente para administrar tus vehiculos.
-            </p>
+            </span>
           </p>
         </div>
       </div>

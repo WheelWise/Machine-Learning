@@ -49,7 +49,6 @@ export default function StepOne({
               body: form,
             });
             const data = await response.json();
-            console.log(data);
             if (!data.error) {
               lineSetter(data.lines);
               fileIdSetter(data.id);
@@ -69,7 +68,6 @@ export default function StepOne({
   };
 
   const cancelOverride = (e: any) => {
-    e.preventDefault();
     setFile(null);
     setError(0);
     onCancel(e);

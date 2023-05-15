@@ -30,10 +30,7 @@ export default function StepTwo({ onNext, onCancel, lines, fileId }: Props) {
         body: new URLSearchParams({ file_id: fileId }),
       });
       const data = await response.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
     onCancel(e);
   };
 
@@ -80,11 +77,11 @@ export default function StepTwo({ onNext, onCancel, lines, fileId }: Props) {
           cierres esta ventana.
           <br />
           <br />
-          <p className="text-xs">
+          <span className="text-xs">
             * Toma en cuenta que al dar click en "Empezar", aceptas que este es
             una accion <i>irreversible</i> y asumes la responsabilidad de la
             misma.
-          </p>
+          </span>
         </p>
       </div>
       <div className="col-span-4 col-start-2 items-center justify-center text-center ">
