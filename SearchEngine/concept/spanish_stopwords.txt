@@ -1,4 +1,5 @@
 a
+caracteristica
 actualmente
 adelante
 además

@@ -5,6 +5,8 @@ acura
 bmw
 chrysler
 ford
+sedan
+suv
 buick
 infiniti
 gmc
