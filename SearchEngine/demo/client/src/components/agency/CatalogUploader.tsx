@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
 import StepList from "./StepList";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
@@ -87,3 +86,15 @@ export default function CatalogUploader() {
     </>
   );
 }
+
+/**
+ *  {actualStep === 0 && (
+              <StepOne
+                onNext={handleNext}
+                onCancel={handleModal}
+                lineSetter={setFileLines}
+                fileIdSetter={setFileId}
+              />
+            )}
+ * 
+ */

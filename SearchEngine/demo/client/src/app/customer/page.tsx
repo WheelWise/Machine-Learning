@@ -1,7 +1,13 @@
+"use client";
+import { SearchBar, SearchResults } from "@/components/customer";
+import { useState } from "react";
+
 export default function Customer() {
+  const [reuslt, setResult] = useState([]);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-6xl font-bold">Customer Page</h1>
+    <main className="grid grid-cols-6 gap-3 text-gray-800">
+      <SearchBar resultSetter={setResult} />
+      <SearchResults results={reuslt} />
     </main>
   );
 }

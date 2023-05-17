@@ -3,7 +3,7 @@ Agency utilities for uploading catalog (csv or indiviudal)
 By Sebastian Mora (@bastian1110)
 """
 import csv
-from utils import embed, make_sentence
+from pymongo import MongoClient
 
 
 # Class for handling data upload to the database
@@ -30,7 +30,7 @@ class Reader:
 
 
 if __name__ == "__main__":
-    from pymongo import MongoClient
+    from utils import embed, make_sentence
 
     my_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
     with open("test.csv", "r") as f:

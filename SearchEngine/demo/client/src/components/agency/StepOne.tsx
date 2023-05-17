@@ -186,7 +186,7 @@ export default function StepOne({
         </div>
       )}
       {error === 2 && (
-        <div className="col-span-6 ml-8 mr-2">
+        <div className="col-span-6 ml-8 mr-6 rounded-lg bg-red-100 p-2">
           <h2 className=" text-xl font-bold text-slate-800">
             <svg
               className="mb-1 mr-2 inline-block h-7 w-7"
