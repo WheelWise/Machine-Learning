@@ -44,7 +44,7 @@ The arrows of each color specify a process from an input to an output, except fo
 
 ## The Architecture
 
-We are working on it ...
+We are pllaning deploying it using MongoDB Atlas, and as AWS Automatic Scaling Group.
 
 ## License
 

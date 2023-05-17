@@ -7,13 +7,17 @@ from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from pipe.search_engine import SearchEngine
 from pipe.utils import embed
+import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
 app.config["CORS_HEADERS"] = "Content-Type"
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-searcher = SearchEngine("mongodb://localhost:27017", "test", embed)
+DATABASE_URI = os.environ.get("MONGO_URI")
+DATABASE_NAME = os.environ.get("TARGET_DB")
+
+searcher = SearchEngine(DATABASE_URI, DATABASE_NAME, embed)
 searcher.build(15)
 
 

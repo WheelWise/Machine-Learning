@@ -44,6 +44,7 @@ class SearchEngine:
     def search(self, string) -> list:
         if self.knowledge_size != 0:
             res = []
+            # Regio NL-Preprocessing function
             embeded = np.array(self.embedder(string.lower()))
             distances, indices = self.model.kneighbors([embeded])
             for i in range(len(indices[0])):
