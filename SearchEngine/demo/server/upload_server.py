@@ -18,6 +18,9 @@ app.config["CORS_HEADERS"] = "Content-Type"
 socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
+DATABASE_URI = os.environ.get("MONGO_URI")
+DATABASE_NAME = os.environ.get("TARGET_DB")
+
 
 @app.route("/upload", methods=["POST"])
 def upload():
@@ -65,7 +68,7 @@ def cancel():
 
 @socketio.on("start-processing")
 def handle_start_processing(data):
-    temp_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
+    temp_reader = Reader(DATABASE_URI, DATABASE_NAME, embed, make_sentence)
     with open(f'./temp/{data["fileId"]}.csv', "r") as f:
         dict_reader = csv.DictReader(f)
         line = 1
