@@ -1,7 +1,7 @@
 import json
 
 # load database of known car models and tags
-with open("car_models.json") as f:
+with open("tags.json") as f:
     car_models = json.load(f)
 
 
@@ -15,7 +15,7 @@ def tag_car_model(car_model):
         tags = input("Tags (separated by commas): ").split(",")
         # store new car model and tags in database
         car_models[car_model] = [tag.strip() for tag in tags]
-        with open("car_models.json", "w", encoding="utf-8") as f:
+        with open("tags.json", "w", encoding="utf-8") as f:
             json.dump(car_models, f, ensure_ascii=False, indent=4)
         return tags
 

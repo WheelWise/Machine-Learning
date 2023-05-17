@@ -3,6 +3,21 @@ type Props = {
 };
 
 export default function StepTre({ onCancel }: Props) {
+  const updateModel = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8082/update", {
+        method: "POST",
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {}
+  };
+
+  const cancelOverride = (e: any) => {
+    updateModel(e);
+    onCancel(e);
+  };
   return (
     <>
       <div className="col-span-6 grid grid-cols-2 ">
@@ -51,7 +66,7 @@ export default function StepTre({ onCancel }: Props) {
       </div>
       <div className="col-span-6 row-start-6 mx-6 items-end  justify-end text-end ">
         <button
-          onClick={onCancel}
+          onClick={cancelOverride}
           className="mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 hover:bg-violet-500 hover:text-white"
         >
           Aceptar

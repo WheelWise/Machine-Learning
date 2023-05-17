@@ -1,5 +1,5 @@
 """ 
-WW Search Engine Server 
+WW Search Engine Upload Server 
 By : Sebastian Mora (@bastian1110)
 """
 from pipe.reader import Reader
