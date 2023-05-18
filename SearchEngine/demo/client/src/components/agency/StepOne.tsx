@@ -5,6 +5,7 @@ type Props = {
   onCancel: (e: any) => void;
   lineSetter: (l: number) => void;
   fileIdSetter: (id: string) => void;
+  attributesSetter: (a: []) => void;
 };
 
 export default function StepOne({
@@ -12,6 +13,7 @@ export default function StepOne({
   onCancel,
   lineSetter,
   fileIdSetter,
+  attributesSetter,
 }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -52,6 +54,7 @@ export default function StepOne({
             if (!data.error) {
               lineSetter(data.lines);
               fileIdSetter(data.id);
+              attributesSetter(data.attributes);
               onNext();
             } else {
               setError(2);

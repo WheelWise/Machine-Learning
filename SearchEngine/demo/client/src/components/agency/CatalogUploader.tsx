@@ -4,6 +4,7 @@ import StepList from "./StepList";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepTre from "./StepTre";
+import StepFor from "./StepFor";
 
 export default function CatalogUploader() {
   const [open, setOpen] = useState(false);
@@ -11,6 +12,9 @@ export default function CatalogUploader() {
 
   const [fileId, setFileId] = useState("");
   const [fileLines, setFileLines] = useState(2);
+  const [attributes, setAttributes] = useState([]);
+  const [view, setView] = useState({});
+  const [make, setMake] = useState("");
 
   function handleModal(e: any) {
     e.preventDefault();
@@ -68,18 +72,31 @@ export default function CatalogUploader() {
                 onCancel={handleModal}
                 lineSetter={setFileLines}
                 fileIdSetter={setFileId}
+                attributesSetter={setAttributes}
               />
             )}
-
             {actualStep === 1 && (
               <StepTwo
                 onNext={handleNext}
                 onCancel={handleModal}
-                lines={fileLines}
                 fileId={fileId}
+                attributes={attributes}
+                viewSetter={setView}
+                makeSetter={setMake}
               />
             )}
-            {actualStep === 2 && <StepTre onCancel={handleModal} />}
+
+            {actualStep === 2 && (
+              <StepTre
+                onNext={handleNext}
+                onCancel={handleModal}
+                lines={fileLines}
+                fileId={fileId}
+                view={view}
+                make={make}
+              />
+            )}
+            {actualStep === 3 && <StepFor onCancel={handleModal} />}
           </div>
         </div>
       </div>

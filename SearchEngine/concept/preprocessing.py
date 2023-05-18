@@ -18,7 +18,6 @@ import language_tool_python
 import text_to_num
 from functools import lru_cache
 import timeit
-import es_core_news_sm
 
 # Download NLTK resources
 download("stopwords")
@@ -27,6 +26,8 @@ SPANISH_STOPWORDS = stopwords.words("spanish")
 # Load spaCy accurate model
 # NLP = spacy.load('es_dep_news_trf')
 # Load spaCy efficient model
+import es_core_news_sm
+
 NLP = es_core_news_sm.load()
 
 # Load additional stopwords

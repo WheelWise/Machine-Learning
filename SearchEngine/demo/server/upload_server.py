@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify, session
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 from uuid import uuid4
+from dotenv import load_dotenv
 import csv
 import os
 
@@ -18,6 +19,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
+load_dotenv()
 DATABASE_URI = os.environ.get("MONGO_URI")
 DATABASE_NAME = os.environ.get("TARGET_DB")
 
@@ -34,23 +36,29 @@ def upload():
     with open(f"./temp/{file_name}.csv", "r") as f:
         lines = f.readlines()
         headers = lines[0][:-1].split(",")
-        if "modelo" in headers or "Modelo" in headers:
-            return (
-                jsonify(
-                    {
-                        "message": "File saved successfully!",
-                        "lines": len(lines) - 1,
-                        "id": file_name,
-                        "error": False,
-                    }
-                ),
-                200,
-            )
-        os.remove(f"./temp/{file_name}.csv")
+        headers = [word.lower() for word in headers]
+        lines[0] = ",".join(headers) + "\n"
+
+    with open(f"./temp/{file_name}.csv", "w") as f:
+        f.writelines(lines)
+
+    if "modelo" in headers:
         return (
-            jsonify({"message": "Missing header <modelo>", "error": True}),
-            400,
+            jsonify(
+                {
+                    "message": "File saved successfully!",
+                    "lines": len(lines) - 1,
+                    "attributes": headers,
+                    "id": file_name,
+                    "error": False,
+                }
+            ),
+            200,
         )
+    return (
+        jsonify({"message": "Missing header <modelo>", "error": True}),
+        400,
+    )
 
 
 @app.route("/cancel", methods=["POST"])
@@ -73,7 +81,7 @@ def handle_start_processing(data):
         dict_reader = csv.DictReader(f)
         line = 1
         for row in dict_reader:
-            temp_reader.read_row(row, "0")
+            temp_reader.read_row(row, "0", data["make"], data["view"])
             emit("progress", {"number": line})
             line += 1
     temp_reader.push_to_db()

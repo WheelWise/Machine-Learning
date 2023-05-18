@@ -4,7 +4,7 @@ type Props = {
 
 export default function StepList({ step }: Props) {
   return (
-    <ol className=" ml-[14%] flex w-full items-center">
+    <ol className=" ml-[10%] flex w-full items-center">
       <li
         className={`text flex w-full items-center transition-all duration-500 ${
           step > 0 ? "text-violet-600" : "text-gray-400"
@@ -41,7 +41,7 @@ export default function StepList({ step }: Props) {
         </span>
       </li>
       <li
-        className={`text flex w-full items-center transition-colors duration-500 ${
+        className={`text flex w-full items-center transition-all duration-500 ${
           step > 1 ? "text-violet-600" : "text-gray-400"
         } after:inline-block after:h-1 after:w-full after:border-4 after:border-b ${
           step > 1 ? "after:border-violet-100" : "after:border-gray-100"
@@ -50,14 +50,46 @@ export default function StepList({ step }: Props) {
         <span
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
             step > 1 ? "bg-violet-100" : "bg-gray-100"
-          } ${
+          } dark:bg-violet-800 lg:h-12 lg:w-12 ${
             step === 1 ? "bg-violet-400" : ""
+          }`}
+        >
+          <svg
+            className={`h-5 w-5 ${
+              step > 1 ? "text-violet-600" : "text-gray-400"
+            }  ${step === 1 ? "text-white" : ""}`}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {" "}
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />{" "}
+            <circle cx="8.5" cy="8.5" r="1.5" />{" "}
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </span>
+      </li>
+      <li
+        className={`text flex w-full items-center transition-colors duration-500 ${
+          step > 2 ? "text-violet-600" : "text-gray-400"
+        } after:inline-block after:h-1 after:w-full after:border-4 after:border-b ${
+          step > 2 ? "after:border-violet-100" : "after:border-gray-100"
+        } after:content-[''] dark:text-violet-500 dark:after:border-violet-800`}
+      >
+        <span
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+            step > 2 ? "bg-violet-100" : "bg-gray-100"
+          } ${
+            step === 2 ? "bg-violet-400" : ""
           } dark:bg-violet-800 lg:h-12 lg:w-12`}
         >
           <svg
             className={`h-7 w-7 ${
-              step > 1 ? "text-violet-600" : "text-gray-400"
-            } ${step === 1 ? "text-white" : ""}`}
+              step > 2 ? "text-violet-600" : "text-gray-400"
+            } ${step === 2 ? "text-white" : ""}`}
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -84,16 +116,16 @@ export default function StepList({ step }: Props) {
       <li className="flex w-full items-center">
         <span
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-            step > 2 ? "bg-violet-100" : "bg-gray-100"
+            step > 3 ? "bg-violet-100" : "bg-gray-100"
           } dark:bg-violet-800 lg:h-12 lg:w-12 ${
-            step === 2 ? "bg-violet-400" : ""
+            step === 3 ? "bg-violet-400" : ""
           }`}
         >
           <svg
             aria-hidden="true"
             className={`h-5 w-5 ${
-              step > 2 ? "text-violet-600" : "text-gray-400"
-            } ${step === 2 ? "text-white" : ""}`}
+              step > 3 ? "text-violet-600" : "text-gray-400"
+            } ${step === 3 ? "text-white" : ""}`}
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"

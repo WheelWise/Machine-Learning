@@ -1,24 +1,56 @@
-import { useEffect, useState } from "react";
-import { Socket, io } from "socket.io-client";
+import { useState } from "react";
+
 type Props = {
   onNext: () => void;
   onCancel: (e: any) => void;
-  lines: number;
   fileId: string;
+  attributes: never[];
+  viewSetter: (v: object) => void;
+  makeSetter: (m: string) => void;
 };
 
-export default function StepTwo({ onNext, onCancel, lines, fileId }: Props) {
-  const [actualProgress, setActualProgress] = useState(0);
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [running, setRunning] = useState(true);
+export default function StepTwo({
+  onNext,
+  onCancel,
+  fileId,
+  viewSetter,
+  attributes,
+  makeSetter,
+}: Props) {
+  const [viewForm, setViewForm] = useState({ title: "", year: "", price: "" });
+  const [makeInput, setMakeInput] = useState("");
 
-  const startProcess = () => {
-    const socket = io("http://localhost:8080");
-    socket.on("progress", (data) => {
-      setActualProgress(data.number);
-    });
-    socket.emit("start-processing", { fileId });
-    setSocket(socket);
+  const handleTitle = (e: any) => {
+    e.preventDefault();
+    setViewForm((prevView) => ({ ...prevView, title: e.target.value }));
+  };
+
+  const handleYear = (e: any) => {
+    e.preventDefault();
+    setViewForm((prevView) => ({ ...prevView, year: e.target.value }));
+  };
+
+  const handlePrice = (e: any) => {
+    e.preventDefault();
+    setViewForm((prevView) => ({ ...prevView, price: e.target.value }));
+  };
+
+  const handleMake = (e: any) => {
+    e.preventDefault();
+    setMakeInput(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    const allValuesNotEmpty = Object.values(viewForm).every(
+      (value) => typeof value === "string" && value.trim() !== ""
+    );
+    if (allValuesNotEmpty) {
+      viewSetter(viewForm);
+      makeSetter(makeInput);
+      onNext();
+      return;
+    }
+    return;
   };
 
   const cancelOverride = async (e: any) => {
@@ -33,104 +65,136 @@ export default function StepTwo({ onNext, onCancel, lines, fileId }: Props) {
     } catch (err) {}
     onCancel(e);
   };
-
-  useEffect(() => {
-    if (actualProgress + 1 === lines) {
-      socket?.disconnect();
-      setRunning(false);
-      console.log("Disconected stream server");
-    }
-  });
-
   return (
     <>
-      <div className="col-span-6 ml-8 mr-2">
-        <h2 className="text-xl font-bold text-slate-800">
+      <div className="col-span-6 ml-8 mr-2 grid grid-cols-2">
+        <h2 className="col-span-2 text-xl font-bold text-slate-800">
           <svg
             className="mb-[0.2rem] mr-2 inline-block h-7 w-7"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
             fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
             {" "}
-            <path stroke="none" d="M0 0h24v24H0z" />{" "}
-            <line x1="12" y1="12" x2="12" y2="12.01" />{" "}
-            <path
-              d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10"
-              transform="rotate(45 12 12)"
-            />{" "}
-            <path
-              d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10"
-              transform="rotate(-45 12 12)"
-            />
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />{" "}
+            <circle cx="8.5" cy="8.5" r="1.5" />{" "}
+            <polyline points="21 15 16 10 5 21" />
           </svg>
-          2. Deja que Wheelie haga su magia.
+          2. Configra la vista de tus autos.
         </h2>
-        <p className="mr-2 mt-4 text-slate-500">
-          Wheelie tiene tu archivo! Ahora solo da click en el boton de "Empezar"
-          para que Wheelie analize cada vehciulo en tu archivo. Porfavor, no
-          cierres esta ventana.
-          <br />
-          <br />
-          <span className="text-xs">
-            * Toma en cuenta que al dar click en "Empezar", aceptas que este es
-            una accion <i>irreversible</i> y asumes la responsabilidad de la
-            misma.
-          </span>
-        </p>
-      </div>
-      <div className="col-span-4 col-start-2 items-center justify-center text-center ">
-        {actualProgress === 0 && (
-          <button
-            onClick={startProcess}
-            className="rounded-md bg-violet-500 px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-110 active:bg-violet-800"
+        <div className="col-span-1 ">
+          <p className="mb-2 text-slate-500">
+            <span className="block text-xl font-bold text-emerald-500">
+              Importante!
+            </span>
+            <i className="text-violet-600">Wheelie</i> ha analizado tu archivo y
+            ha encontrado los atributos de tus vehiculos, ahora solo slecciona
+            cuales de los atributos seran los que veran los clientes.{" "}
+            <b className="text-pink-600">
+              * Asegurate de configurar las vistas{" "}
+            </b>
+          </p>
+          <label
+            htmlFor="first_name"
+            className="block text-sm font-medium text-gray-900 dark:text-white"
           >
-            Empezar
-          </button>
-        )}
-        {actualProgress !== 0 && (
-          <>
-            <div className="mb-1 flex justify-between">
-              <span className="text-base font-medium text-violet-800 dark:text-white">
-                Columnas Procesadas
-              </span>
-              <span className="text-sm font-medium text-violet-800 dark:text-white">
-                {Math.ceil((actualProgress * 100) / lines)} %
-                {actualProgress + 1 === lines && " Completo!"}
-              </span>
-            </div>
-            <div className="h-2.5 rounded-full bg-gray-200 dark:bg-gray-700">
-              <div
-                className="h-2.5 rounded-full bg-violet-500"
-                style={{ width: `${(actualProgress * 100) / lines}%` }}
-              ></div>
-            </div>
-          </>
-        )}
+            Marca
+          </label>
+          <input
+            type="text"
+            id="first_name"
+            className="block w-[92%] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            placeholder="?"
+            value={makeInput}
+            onChange={handleMake}
+            required
+          ></input>
+          <div className="inline-block w-[30%]">
+            <label
+              htmlFor="countries"
+              className=" block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Titulo
+            </label>
+            <select
+              onChange={handleTitle}
+              id="countries"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            >
+              <option value="">?</option>
+              {attributes.map((data) => (
+                <option key={data} value={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="ml-2 inline-block w-[30%]">
+            <label
+              htmlFor="countries"
+              className="block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Año
+            </label>
+            <select
+              onChange={handleYear}
+              id="countries"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            >
+              <option value="">?</option>
+              {attributes.map((data) => (
+                <option key={data} value={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="ml-2 inline-block w-[28%]">
+            <label
+              htmlFor="countries"
+              className="inline-block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Precio
+            </label>
+            <select
+              onChange={handlePrice}
+              id="countries"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            >
+              <option value="">?</option>
+              {attributes.map((data) => (
+                <option key={data} value={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="col-span-1 mx-8 grid grid-cols-6 rounded-lg border border-gray-300 bg-white shadow-md">
+          <div className="col-span-6 mx-6 mb-2 mt-4 rounded-lg border-2 border-dashed border-slate-100 bg-slate-200 p-4 py-8 text-center">
+            <i className="font-semibold text-slate-400">Foto del Vehiculo</i>
+          </div>
+          <h5 className="col-span-6 ml-6  text-xl font-semibold tracking-tight text-gray-900">
+            {makeInput} {viewForm.title} {viewForm.year}
+          </h5>
+          <span className="col-span-6 -mt-10 ml-6 inline-block text-xl font-bold text-slate-700">
+            $ {viewForm.price} MXN
+          </span>
+        </div>
       </div>
       <div className="col-span-6 row-start-6 mx-6 items-end  justify-end text-end ">
         <button
           onClick={cancelOverride}
-          disabled={!(actualProgress === 0)}
-          className={`mx-2 rounded-[2rem] border-2 border-slate-300 px-4 py-2 text-slate-400 transition-all duration-200 ${
-            actualProgress === 0
-              ? "hover:border-red-400 hover:text-red-400"
-              : ""
-          } `}
+          className={`mx-2 rounded-[2rem] border-2 border-slate-300 px-4 py-2 text-slate-400 transition-all duration-200 hover:border-red-400 hover:text-red-400 `}
         >
           Cancelar
         </button>
         <button
-          onClick={onNext}
-          disabled={running}
-          className={`mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 ${
-            running ? "" : "hover:bg-violet-500 hover:text-white"
-          } `}
+          onClick={handleSubmit}
+          className="mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 hover:bg-violet-500 hover:text-white"
         >
           Continuar
         </button>

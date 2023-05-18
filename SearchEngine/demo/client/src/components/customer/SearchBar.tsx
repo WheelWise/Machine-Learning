@@ -30,7 +30,7 @@ export default function SearchBar({ resultSetter }: Props) {
         value={query}
         onChange={handleQueryChange}
         placeholder="Un coche rojo para la montaña ..."
-        className="inlin-block bottom-2 col-span-2 ml-10 rounded-xl border-2 border-blue-400 py-3 pl-6 pr-8 shadow-md "
+        className="inlin-block bottom-2 col-span-5 md: col-span-4lg:col-span-2 ml-10 rounded-xl border-2 border-blue-400 py-3 pl-6 pr-8 shadow-md "
       />
       <button
         onClick={handleSearch}
