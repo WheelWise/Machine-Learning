@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify, session
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 from uuid import uuid4
+from dotenv import load_dotenv
 import csv
 import os
 
@@ -18,6 +19,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
+load_dotenv()
 DATABASE_URI = os.environ.get("MONGO_URI")
 DATABASE_NAME = os.environ.get("TARGET_DB")
 
@@ -74,7 +76,7 @@ def cancel():
 
 @socketio.on("start-processing")
 def handle_start_processing(data):
-    temp_reader = Reader(DATABASE_URI, "test", embed, make_sentence)
+    temp_reader = Reader(DATABASE_URI, DATABASE_NAME, embed, make_sentence)
     with open(f'./temp/{data["fileId"]}.csv', "r") as f:
         dict_reader = csv.DictReader(f)
         line = 1
