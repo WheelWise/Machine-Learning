@@ -17,7 +17,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 DATABASE_URI = os.environ.get("MONGO_URI")
 DATABASE_NAME = os.environ.get("TARGET_DB")
 
-searcher = SearchEngine(DATABASE_URI, DATABASE_NAME, embed)
+searcher = SearchEngine(DATABASE_URI, "test", embed)
 searcher.build(15)
 
 

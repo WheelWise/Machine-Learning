@@ -34,23 +34,29 @@ def upload():
     with open(f"./temp/{file_name}.csv", "r") as f:
         lines = f.readlines()
         headers = lines[0][:-1].split(",")
-        if "modelo" in headers or "Modelo" in headers:
-            return (
-                jsonify(
-                    {
-                        "message": "File saved successfully!",
-                        "lines": len(lines) - 1,
-                        "id": file_name,
-                        "error": False,
-                    }
-                ),
-                200,
-            )
-        os.remove(f"./temp/{file_name}.csv")
+        headers = [word.lower() for word in headers]
+        lines[0] = ",".join(headers) + "\n"
+
+    with open(f"./temp/{file_name}.csv", "w") as f:
+        f.writelines(lines)
+
+    if "modelo" in headers:
         return (
-            jsonify({"message": "Missing header <modelo>", "error": True}),
-            400,
+            jsonify(
+                {
+                    "message": "File saved successfully!",
+                    "lines": len(lines) - 1,
+                    "attributes": headers,
+                    "id": file_name,
+                    "error": False,
+                }
+            ),
+            200,
         )
+    return (
+        jsonify({"message": "Missing header <modelo>", "error": True}),
+        400,
+    )
 
 
 @app.route("/cancel", methods=["POST"])
@@ -68,12 +74,12 @@ def cancel():
 
 @socketio.on("start-processing")
 def handle_start_processing(data):
-    temp_reader = Reader(DATABASE_URI, DATABASE_NAME, embed, make_sentence)
+    temp_reader = Reader(DATABASE_URI, "test", embed, make_sentence)
     with open(f'./temp/{data["fileId"]}.csv', "r") as f:
         dict_reader = csv.DictReader(f)
         line = 1
         for row in dict_reader:
-            temp_reader.read_row(row, "0")
+            temp_reader.read_row(row, "0", data["make"], data["view"])
             emit("progress", {"number": line})
             line += 1
     temp_reader.push_to_db()
