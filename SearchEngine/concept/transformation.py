@@ -1,3 +1,12 @@
+"""
+Word Transformation by Synonyms
+By : Rodrigo Mendoza
+
+    Packages to install:
+        pip install nltk
+        pip install pymongo
+"""
+
 import nltk
 from nltk.corpus import wordnet as wn
 from pymongo import MongoClient
@@ -71,10 +80,12 @@ class Transformation:
         oracion_convertida = []
         sinonimos_encontrados = {}
         for palabra in oracion.split():
+            # Si encuentra la palabra en la DB de sinonimos, la reemplaza por la palabra del banco de palabras
             if palabra in self.palabras_sinonimos:
                 oracion_convertida.append(self.palabras_sinonimos[palabra])
                 print('palabra encontrada en la base de datos')
             else:
+                # Si no, agrega la palabra al banco de palabras y busca sus sinonimos
                 sinonimos = self.obtener_sinonimos(palabra)
                 sinonimos_encontrados[palabra] = palabra
                 for sinonimo in sinonimos:
@@ -82,6 +93,7 @@ class Transformation:
                         sinonimos_encontrados[sinonimo] = palabra
                 oracion_convertida.append(palabra)
 
+        # Agrega a la base de mongo los sinonimos encontrados
         if sinonimos_encontrados:
             for sinonimo, palabra in sinonimos_encontrados.items():
                 self.guardar_palabra_sinonimo(palabra, sinonimo)
