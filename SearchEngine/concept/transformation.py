@@ -77,6 +77,7 @@ class Transformation:
                 self.push_db()
 
     def transform(self, oracion):
+        self.palabras_sinonimos = self.mongo.read_collection()
         oracion_convertida = []
         sinonimos_encontrados = {}
         for palabra in oracion.split():
