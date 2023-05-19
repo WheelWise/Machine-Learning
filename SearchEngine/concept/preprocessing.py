@@ -84,8 +84,8 @@ class Preprocessing:
     @lru_cache(maxsize=None)
     def transform_prompt_without_stem(self, prompt):
         self.prompt = prompt
-        self.correct_spelling()
         self.strip_formatting(False)
+        self.correct_spelling()
         self.remove_stopwords()
         self.transform()
         self.strip_formatting()
@@ -124,9 +124,11 @@ class Preprocessing:
             SPECIAL_CASE_1,
             SPECIAL_CASE_2,
             HASTAG_PATTERN,
-            WORD_LENGTH_PATTERN,
-            ALPHA_NUMERIC_PATTERN,
+            WORD_LENGTH_PATTERN
         ]
+        if remove_accents:
+            replace_to_blank.append(ALPHA_NUMERIC_PATTERN)
+
         for pattern in replace_to_blank:
             self.prompt = pattern.sub("", self.prompt)
 
@@ -173,7 +175,7 @@ class Preprocessing:
 if __name__ == '__main__':
     import timeit
     start = timeit.default_timer()
-    prompt = "Coche deportivo rojo de dos puertas con estilo deportivo y elegante."
+    prompt = "SUV mediano plateado con capacidad para siete pasajeros y tracción en las cuatro ruedas."
     prompt = Preprocessing().transform_prompt_without_stem(prompt)
     end = timeit.default_timer()
     print(prompt)
