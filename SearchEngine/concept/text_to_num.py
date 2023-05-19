@@ -1,3 +1,8 @@
+"""
+Transform text numbers to integer numbers
+By : Rodrigo Mendoza
+"""
+
 import re
 
 Small = {

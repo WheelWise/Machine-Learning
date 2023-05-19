@@ -18,6 +18,7 @@ import language_tool_python
 import text_to_num
 from functools import lru_cache
 import timeit
+from transformation import Transformation
 
 # Download NLTK resources
 download("stopwords")
@@ -36,11 +37,9 @@ with open("spanish_stopwords", "r", encoding="utf-8") as file:
 STOPWORDS = SPANISH_STOPWORDS + ADDITIONAL_STOPWORDS
 TOOL = language_tool_python.LanguageTool("es-MX")
 
-
 with open("go_words", "r", encoding="utf-8") as file:
     go_words = file.read().splitlines()
 GO_WORDS = go_words
-
 
 # Regex compilations for additional performance
 EMAIL_PATTERN = re.compile(r"\S*@\S*\s?")
@@ -64,11 +63,15 @@ ALPHA_NUMERIC_PATTERN = re.compile(r"[^a-zA-Z\d|\s|ñ]")
 class Preprocessing:
     def __init__(self):
         self.prompt = ""
+        self.transformation = Transformation()
 
     @lru_cache(maxsize=None)
     def transform_prompt(self, prompt):
         self.prompt = prompt
+        self.remove_stopwords()
         self.correct_spelling()
+        self.strip_formatting(False)
+        self.transform()
         self.strip_formatting()
         self.lemmatize_prompt()
         self.stem_prompt()
@@ -82,6 +85,9 @@ class Preprocessing:
     def transform_prompt_without_stem(self, prompt):
         self.prompt = prompt
         self.correct_spelling()
+        self.strip_formatting(False)
+        self.remove_stopwords()
+        self.transform()
         self.strip_formatting()
         self.lemmatize_prompt()
         self.convert_to_numeric()
@@ -90,21 +96,25 @@ class Preprocessing:
 
         return self.prompt
 
-    def strip_formatting(self):
+    def transform(self):
+        self.prompt = self.transformation.transform(self.prompt)
+
+    def strip_formatting(self, remove_accents=True):
         self.prompt = self.prompt.lower()
 
-        replace_to_word = [
-            A_ACCENT_PATTERN,
-            E_ACCENT_PATTERN,
-            I_ACCENT_PATTERN,
-            O_ACCENT_PATTERN,
-            U_ACCENT_PATTERN,
-        ]
-        word_to_replace = ["a", "e", "i", "o", "u"]
-        for pattern in replace_to_word:
-            self.prompt = pattern.sub(
-                word_to_replace[replace_to_word.index(pattern)], self.prompt
-            )
+        if remove_accents:
+            replace_to_word = [
+                A_ACCENT_PATTERN,
+                E_ACCENT_PATTERN,
+                I_ACCENT_PATTERN,
+                O_ACCENT_PATTERN,
+                U_ACCENT_PATTERN,
+            ]
+            word_to_replace = ["a", "e", "i", "o", "u"]
+            for pattern in replace_to_word:
+                self.prompt = pattern.sub(
+                    word_to_replace[replace_to_word.index(pattern)], self.prompt
+                )
 
         replace_to_blank = [
             EMAIL_PATTERN,
@@ -158,3 +168,13 @@ class Preprocessing:
 
     def convert_to_numeric(self):
         self.prompt = text_to_num.text2num(self.prompt)
+
+
+if __name__ == '__main__':
+    import timeit
+    start = timeit.default_timer()
+    prompt = "Coche deportivo rojo de dos puertas con estilo deportivo y elegante."
+    prompt = Preprocessing().transform_prompt_without_stem(prompt)
+    end = timeit.default_timer()
+    print(prompt)
+    print(end - start)
