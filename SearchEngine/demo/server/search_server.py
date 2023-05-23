@@ -21,19 +21,6 @@ DATABASE_URI = os.environ.get("MONGO_URI")
 DATABASE_NAME = os.environ.get("TARGET_DB")
 
 searcher = SearchEngine(DATABASE_URI, DATABASE_NAME, embed)
-searcher.build(15)
-
-
-@app.route("/update", methods=["POST"])
-def updateModel():
-    neighbors = request.values.get("neighbors")
-    if not neighbors:
-        neighbors = 15
-    try:
-        searcher.build(int(neighbors))
-        return jsonify({"message": "Model trained!", "error": False}), 200
-    except:
-        return jsonify({"message": "Error fitting the model", "error": True}), 500
 
 
 @app.route("/search", methods=["POST"])

@@ -10,7 +10,9 @@ By : Rodrigo Mendoza
 import nltk
 from nltk.corpus import wordnet as wn
 from pymongo import MongoClient
-nltk.download('wordnet')
+
+nltk.download("wordnet")
+nltk.download("omw-1.4")
 
 
 class Mongo:
@@ -28,7 +30,7 @@ class Mongo:
         cursor = collection.find({})
         synonyms = {}
         for document in cursor:
-            synonyms.update(document['sinonimo'])
+            synonyms.update(document["sinonimo"])
         return synonyms
 
     def push_to_db(self):
@@ -50,15 +52,15 @@ class Transformation:
 
     def obtener_sinonimos(self, palabra):
         sinonimos = []
-        for syn in wn.synsets(palabra, lang='spa'):
-            for lemma in syn.lemmas('spa'):
+        for syn in wn.synsets(palabra, lang="spa"):
+            for lemma in syn.lemmas("spa"):
                 sinonimo = lemma.name()
                 if sinonimo != palabra:
                     sinonimos.append(lemma.name())
         return sinonimos
 
     def first_load(self):
-        with open("word_bank", 'r', encoding='utf-8') as f:
+        with open("word_bank", "r", encoding="utf-8") as f:
             palabras = f.read.splitlines()
             sinonimos_encontrados = {}
             for palabra in palabras:
@@ -84,7 +86,7 @@ class Transformation:
             # Si encuentra la palabra en la DB de sinonimos, la reemplaza por la palabra del banco de palabras
             if palabra in self.palabras_sinonimos:
                 oracion_convertida.append(self.palabras_sinonimos[palabra])
-                print('palabra encontrada en la base de datos')
+                print("palabra encontrada en la base de datos")
             else:
                 # Si no, agrega la palabra al banco de palabras y busca sus sinonimos
                 sinonimos = self.obtener_sinonimos(palabra)
@@ -100,5 +102,4 @@ class Transformation:
                 self.guardar_palabra_sinonimo(palabra, sinonimo)
             self.push_db()
 
-        return ' '.join(oracion_convertida)
-
+        return " ".join(oracion_convertida)
