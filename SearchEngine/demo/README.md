@@ -28,7 +28,14 @@ python csv_faker.py Nissan 1000
 python csv_faker.py Mazda 1000
 ```
 
-4. Run the frontend and the two servers with their respective command :
+4. Create a `.env` file inside the `server` directory :
+
+```
+MONGO_URI="your mongo uri"
+TARGET_DB="wheelwise"
+```
+
+5. Run the frontend and the two servers with their respective command :
 
 ```
 cd client && npm run dev
@@ -36,6 +43,6 @@ cd server && python upload_server.py
 cd server && python search_server.py
 ```
 
-5. Play with the frontend, upload a csv file in the `Seller` interface.
+6. Play with the frontend, upload a csv file in the `Seller` interface.
 
-6. Thats it!
+7. Thats it!

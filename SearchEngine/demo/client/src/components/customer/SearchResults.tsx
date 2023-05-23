@@ -4,6 +4,7 @@ import CarCard from "./CarCard";
 type Props = {
   results: any;
 };
+
 export default function SearchResults({ results }: Props) {
   useEffect(() => {
     console.log(results);
@@ -17,14 +18,8 @@ export default function SearchResults({ results }: Props) {
         </h1>
       )}
       {results.map((car: any) => (
-        <CarCard car={car} view={car["view"]} />
+        <CarCard car={car} view={car["view"]} image={car["imagen"]} />
       ))}
     </div>
   );
 }
-
-/**
- *  <span key={d[key]} className="block">
-                <b key={d[key]}>{key}</b>: {d[key]}
-              </span>
- */

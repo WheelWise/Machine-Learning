@@ -9,6 +9,7 @@ By : Rodrigo Mendoza
 
 import nltk
 from nltk.corpus import wordnet as wn
+
 import json
 
 nltk.download('wordnet')
@@ -35,14 +36,15 @@ class Transformation:
 
     def obtener_sinonimos(self, palabra):
         sinonimos = []
-        for syn in wn.synsets(palabra, lang='spa'):
-            for lemma in syn.lemmas('spa'):
+        for syn in wn.synsets(palabra, lang="spa"):
+            for lemma in syn.lemmas("spa"):
                 sinonimo = lemma.name()
                 if sinonimo != palabra:
                     sinonimos.append(lemma.name())
         return sinonimos
 
     def first_load(self):
+
         tags = '../demo/server/pipe/tags.json'
         with open(tags, 'r', encoding='utf-8') as f:
             diccionario = json.load(f)
@@ -78,14 +80,18 @@ class Transformation:
         #
         #     self.actualizar_archivo()
 
+
     def transform(self, oracion):
         oracion_convertida = []
         for palabra in oracion.split():
             # Si encuentra la palabra en la DB de sinonimos, la reemplaza por la palabra del banco de palabras
+
             if palabra in self.diccionario:
                 oracion_convertida.append(self.diccionario[palabra])
                 print('palabra encontrada en la base de datos')
             else:
                 oracion_convertida.append(palabra)
 
+
         return ' '.join(oracion_convertida)
+
