@@ -88,7 +88,6 @@ class Transformation:
 
             if palabra in self.diccionario:
                 oracion_convertida.append(self.diccionario[palabra])
-                print('palabra encontrada en la base de datos')
             else:
                 oracion_convertida.append(palabra)
 
