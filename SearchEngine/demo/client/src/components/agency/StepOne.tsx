@@ -46,10 +46,13 @@ export default function StepOne({
           try {
             const form = new FormData();
             form.append("file", file);
-            const response = await fetch("http://localhost:8080/upload", {
-              method: "POST",
-              body: form,
-            });
+            const response = await fetch(
+              "https://wheelieu.wheelwise.xyz/upload",
+              {
+                method: "POST",
+                body: form,
+              }
+            );
             const data = await response.json();
             if (!data.error) {
               lineSetter(data.lines);

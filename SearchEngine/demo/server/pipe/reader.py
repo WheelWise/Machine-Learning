@@ -4,13 +4,15 @@ By Sebastian Mora (@bastian1110)
 """
 import csv
 from pymongo import MongoClient
+from requests import post
 
 
 # Class for handling data upload to the database
 class Reader:
     # Constructor that user the Mongo Connection string and target database
-    def __init__(self, uri, db_name, embed, sentencer):
+    def __init__(self, uri, sql_url, db_name, embed, sentencer):
         self.client = MongoClient(uri)
+        self.sql_url = sql_url
         self.db = self.client[db_name]
         self.embed = embed
         self.sentencer = sentencer
@@ -28,15 +30,31 @@ class Reader:
     def push_to_db(self):
         collection = self.db["autos"]
         collection.insert_many(self.knowledge)
-        print(f"{len(self.knowledge)} rows inserted in DB")
+        documents = collection.find({}, {"_id": 1})
+        counter = 0
+        for doc in documents:
+            response = post(self.sql_url, json={"id_car": str(doc["_id"])})
+            if response.ok:
+                counter += 1
+            else:
+                print("Request failed with status code:", response.text)
+
+        print(f"{len(self.knowledge)} rows inserted in NO SQL DB")
+        print(f"{counter} rows inserted in SQL DB")
 
 
 if __name__ == "__main__":
     from utils import embed, make_sentence
 
-    my_reader = Reader("mongodb://localhost:27017", "test", embed, make_sentence)
+    my_reader = Reader(
+        "mongodb://localhost:27017",
+        "https://sql.wheelwise.xyz/api/car",
+        "test",
+        embed,
+        make_sentence,
+    )
     with open("test.csv", "r") as f:
         dict_reader = csv.DictReader(f)
         for row in dict_reader:
-            my_reader.read_row(row, "0")
+            my_reader.read_row(row, 0, "Ford", {"test": 1})
     my_reader.push_to_db()

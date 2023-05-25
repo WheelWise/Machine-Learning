@@ -13,18 +13,19 @@ import csv
 import os
 
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "secret!"
-app.config["CORS_HEADERS"] = "Content-Type"
-socketio = SocketIO(app, cors_allowed_origins="*")
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+upload_server = Flask(__name__)
+upload_server.config["SECRET_KEY"] = "secret!"
+upload_server.config["CORS_HEADERS"] = "Content-Type"
+socketio = SocketIO(upload_server, cors_allowed_origins="*")
+CORS(upload_server)
 
 load_dotenv()
 DATABASE_URI = os.environ.get("MONGO_URI")
 DATABASE_NAME = os.environ.get("TARGET_DB")
+SQL_DATABASE = os.environ.get("SQL_FRIEND")
 
 
-@app.route("/upload", methods=["POST"])
+@upload_server.route("/upload", methods=["POST"])
 def upload():
     try:
         file = request.files["file"]
@@ -61,7 +62,7 @@ def upload():
     )
 
 
-@app.route("/cancel", methods=["POST"])
+@upload_server.route("/cancel", methods=["POST"])
 def cancel():
     file = request.values.get("file_id")
     if not file:
@@ -76,12 +77,14 @@ def cancel():
 
 @socketio.on("start-processing")
 def handle_start_processing(data):
-    temp_reader = Reader(DATABASE_URI, DATABASE_NAME, embed, make_sentence)
+    temp_reader = Reader(
+        DATABASE_URI, SQL_DATABASE, DATABASE_NAME, embed, make_sentence
+    )
     with open(f'./temp/{data["fileId"]}.csv', "r") as f:
         dict_reader = csv.DictReader(f)
         line = 1
         for row in dict_reader:
-            temp_reader.read_row(row, "0", data["make"], data["view"])
+            temp_reader.read_row(row, data["agencyId"], data["make"], data["view"])
             emit("progress", {"number": line})
             line += 1
     temp_reader.push_to_db()
@@ -90,4 +93,4 @@ def handle_start_processing(data):
 
 
 if __name__ == "__main__":
-    socketio.run(app, port=8080, debug=True)
+    socketio.run(upload_server, host="0.0.0.0", port=8082, allow_unsafe_werkzeug=True)
