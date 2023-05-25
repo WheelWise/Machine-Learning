@@ -56,7 +56,7 @@ export default function StepTwo({
   const cancelOverride = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/cancel", {
+      const response = await fetch("https://wheelieu.wheelwise.xyz/cancel", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ file_id: fileId }),

@@ -62,12 +62,9 @@ def make_sentence(obj):
 
 
 if __name__ == "__main__":
-    testCar = {
-        "modelo": "Focus",
-        "color": "Azul",
-        "año": "2020",
-        "precio": "40000",
-        "potencia": "100",
-        "tracción": "4x4",
-    }
-    print(make_sentence(testCar))
+    import csv
+
+    with open("miau.csv", "r") as f:
+        dict_reader = csv.DictReader(f)
+        for row in dict_reader:
+            print(make_sentence(row))

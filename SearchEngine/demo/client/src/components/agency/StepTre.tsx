@@ -22,18 +22,20 @@ export default function StepTre({
   const [running, setRunning] = useState(true);
 
   const startProcess = () => {
-    const socket = io("http://localhost:8080");
+    const socket = io("https://wheelieu.wheelwise.xyz");
     socket.on("progress", (data) => {
+      console.log(data);
       setActualProgress(data.number);
     });
-    socket.emit("start-processing", { fileId, view, make });
+    //The agency id shoul be changed to the agency id of the user who is uploading the cars
+    socket.emit("start-processing", { fileId, view, make, agencyId: 0 });
     setSocket(socket);
   };
 
   const cancelOverride = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/cancel", {
+      const response = await fetch("https://wheelieu.wheelwise.xyz/cancel", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ file_id: fileId }),

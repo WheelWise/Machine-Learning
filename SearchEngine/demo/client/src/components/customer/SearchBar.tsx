@@ -13,7 +13,7 @@ export default function SearchBar({ resultSetter }: Props) {
   const handleSearch = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8082/search", {
+      const response = await fetch("https://wheelies.wheelwise.xyz/search", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ search: query }),
@@ -30,7 +30,7 @@ export default function SearchBar({ resultSetter }: Props) {
         value={query}
         onChange={handleQueryChange}
         placeholder="Un coche rojo para la montaña ..."
-        className="inlin-block bottom-2 col-span-5 md: col-span-4lg:col-span-2 ml-10 rounded-xl border-2 border-blue-400 py-3 pl-6 pr-8 shadow-md "
+        className="inlin-block md: col-span-4lg:col-span-2 bottom-2 col-span-5 ml-10 rounded-xl border-2 border-blue-400 py-3 pl-6 pr-8 shadow-md "
       />
       <button
         onClick={handleSearch}
