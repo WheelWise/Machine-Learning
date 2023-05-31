@@ -18,7 +18,7 @@ With the id of the car url encoded, here is an example in react.
 
 ```
 try {
-      const response = await fetch("https://wheelies.wheelwise.xyz/cars/", {
+      const response = await fetch("https://wheelies.wheelwise.xyz/cars", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ id : <ID CARRO> }),
@@ -36,7 +36,7 @@ With the id of the make url encoded, here is an example in react.
 
 ```
 try {
-      const response = await fetch("https://wheelies.wheelwise.xyz/cars/make/", {
+      const response = await fetch("https://wheelies.wheelwise.xyz/cars/make", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ id : <ID MARCA> }),
@@ -54,7 +54,7 @@ With the id of the agency url encoded, here is an example in react.
 
 ```
 try {
-      const response = await fetch("https://wheelies.wheelwise.xyz/cars/agency/", {
+      const response = await fetch("https://wheelies.wheelwise.xyz/cars/agency", {
         method: "POST",
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ id : <ID AGENCIA> }),

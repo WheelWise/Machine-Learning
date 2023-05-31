@@ -29,11 +29,11 @@ class Reader:
 
     def push_to_db(self):
         collection = self.db["autos"]
-        collection.insert_many(self.knowledge)
-        documents = collection.find({}, {"_id": 1})
+        result = collection.insert_many(self.knowledge)
+        inserted_ids = result.inserted_ids
         counter = 0
-        for doc in documents:
-            response = post(self.sql_url, json={"id_car": str(doc["_id"])})
+        for i in inserted_ids:
+            response = post(self.sql_url, json={"id_car": str(i)})
             if response.ok:
                 counter += 1
             else:

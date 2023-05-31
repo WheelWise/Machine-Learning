@@ -64,7 +64,24 @@ def make_sentence(obj):
 if __name__ == "__main__":
     import csv
 
-    with open("miau.csv", "r") as f:
+    path = "../tools/catalogs/mazda_catalogo.csv"
+
+    with open(path, "r") as f:
+        lines = f.readlines()
+        headers = lines[0][:-1].split(",")
+        headers = [word.lower() for word in headers]
+        lines[0] = ",".join(headers) + "\n"
+
+    with open(path, "w") as f:
+        f.writelines(lines)
+
+    sentences = []
+    with open(path, "r") as f:
         dict_reader = csv.DictReader(f)
         for row in dict_reader:
-            print(make_sentence(row))
+            sentences.append(make_sentence(row))
+
+    with open("output.txt", "a") as f:
+        for line in sentences:
+            f.write(line)
+            f.write("\n")
