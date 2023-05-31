@@ -28,10 +28,13 @@ api = CarApi(DATABASE_URI, DATABASE_NAME)
 @search_server.route("/search", methods=["POST"])
 def search():
     string = request.values.get("search")
+    n_cars = request.values.get("n_cars")
     if not string:
         return jsonify({"message": "No string search received", "error": True}), 400
+    if not n_cars:
+        n_cars = 30
     try:
-        result = searcher.search(string)
+        result = searcher.search(string, n_cars)
         return (
             jsonify(
                 {

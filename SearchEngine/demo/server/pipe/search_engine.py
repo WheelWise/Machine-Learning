@@ -13,55 +13,46 @@ class SearchEngine:
         self.collection = self.client[db_name]["autos"]
         self.embedder = embedder
 
-    def search(self, string):
+    def search(self, string, n):
         if string:
-            documents = self.collection.find(
-                {"estatus": "stock"}, {"_id": 1, "vector": 1}
-            )
+            data = self.collection.find({"estatus": "stock"})
             index = {}
             embeddings = []
             counter = 0
-            for doc in documents:
-                index[counter] = doc["_id"]
+            for doc in data:
                 embeddings.append(doc["vector"])
+                doc.pop("vector")
+                index[counter] = doc
                 counter += 1
 
             test = self.embedder(string)
             scores = cos_sim([test], embeddings).tolist()[0]
 
-            result = []
+            similarity = []
             for i in range(len(scores) - 1):
-                result.append({"index": i, "score": scores[i]})
+                similarity.append({"object": index[i], "score": scores[i]})
 
-            result = sorted(result, key=lambda x: x["score"], reverse=True)
+            similarity = sorted(similarity, key=lambda x: x["score"], reverse=True)
 
-            final = []
-            x = 0
-            for res in result:
-                if x < 20:
-                    final.append(index[res["index"]])
-                    x += 1
-
-            final_result = self.collection.find(
-                {"_id": {"$in": final}}, {"vector": 0, "estatus": 0}
-            )
-
-            final_documents = []
-            for document in final_result:
-                document["_id"] = str(document["_id"])
-                final_documents.append(document)
-            return final_documents
+            result = []
+            for i in range(n):
+                doc = similarity[i]["object"]
+                doc["_id"] = str(doc["_id"])
+                result.append(doc)
+            return result
         return []
 
 
 if __name__ == "__main__":
     from utils import embed
 
-    my_searcher = SearchEngineCos("mongodb://localhost:27017", "wheelwise", embed)
+    my_searcher = SearchEngine("mongodb://localhost:27017", "wheelwise", embed)
     # _id: { $in: []}
     while True:
         answer = input("New Search ? (Y/n) ")
         if answer.lower() == "n":
             break
         test = input("Busqueda : ")
-        print("Resultado : ", my_searcher.search(test))
+
+        # print("Resultado : ", my_searcher.search(test))
+        my_searcher.search(test, 10)
