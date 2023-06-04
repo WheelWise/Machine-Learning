@@ -1,0 +1,69 @@
+modelo,color,año,precio,motor,potencia,tracción,imagen
+Serie 3,Negro,2023,350000,Gasolina,350 hp,4x4,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+Serie 3,Azul,2021,450000,Gasolina,250 hp,Trasera,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+Serie 3,Rojo,2020,550000,Híbrido,300 hp,Trasera,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+X3,Blanco,2023,400000,Gasolina,250 hp,Trasera,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+X3,Rojo,2023,550000,Híbrido,200 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+X5,Gris,2020,500000,Gasolina,300 hp,4x4,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Z4,Negro,2023,500000,Gasolina,350 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 5,Azul,2021,400000,Gasolina,200 hp,4x4,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Z4,Azul,2023,550000,Gasolina,350 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 8,Azul,2023,550000,Híbrido,250 hp,Trasera,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 5,Rojo,2020,400000,Gasolina,350 hp,4x4,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+X3,Negro,2023,550000,Gasolina,350 hp,Trasera,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+X3,Negro,2023,400000,Híbrido,300 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Z4,Azul,2022,500000,Híbrido,250 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Z4,Gris,2023,400000,Gasolina,200 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 5,Negro,2021,500000,Híbrido,350 hp,4x4,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Z4,Gris,2022,400000,Híbrido,300 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 4,Negro,2021,500000,Híbrido,200 hp,4x4,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Serie 5,Rojo,2022,550000,Gasolina,300 hp,Trasera,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+X3,Negro,2020,350000,Híbrido,250 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+X5,Gris,2020,350000,Híbrido,350 hp,4x4,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Z4,Gris,2021,550000,Gasolina,350 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+X3,Gris,2022,450000,Gasolina,250 hp,Trasera,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Serie 3,Azul,2021,350000,Gasolina,350 hp,Trasera,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+Serie 5,Rojo,2020,550000,Híbrido,300 hp,Trasera,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Serie 4,Blanco,2021,550000,Gasolina,250 hp,Trasera,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Serie 8,Negro,2023,400000,Híbrido,350 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+X5,Negro,2023,550000,Híbrido,300 hp,Trasera,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+X5,Azul,2021,500000,Híbrido,300 hp,4x4,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Serie 8,Rojo,2023,550000,Gasolina,350 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 4,Gris,2020,550000,Gasolina,200 hp,Trasera,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+X3,Azul,2023,450000,Híbrido,250 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Serie 8,Gris,2020,400000,Híbrido,300 hp,Trasera,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 8,Negro,2021,350000,Gasolina,350 hp,Trasera,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 8,Rojo,2023,350000,Híbrido,200 hp,Trasera,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+X5,Blanco,2023,450000,Gasolina,200 hp,Trasera,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+X5,Rojo,2020,400000,Gasolina,250 hp,Trasera,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Serie 4,Azul,2022,550000,Híbrido,350 hp,4x4,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Z4,Azul,2023,400000,Híbrido,200 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+X5,Negro,2022,450000,Gasolina,350 hp,Trasera,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Serie 5,Negro,2022,500000,Híbrido,350 hp,Trasera,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Serie 3,Gris,2021,450000,Gasolina,250 hp,4x4,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+Serie 8,Azul,2023,450000,Gasolina,200 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 8,Negro,2020,450000,Híbrido,200 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+X3,Negro,2022,400000,Híbrido,200 hp,Trasera,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Serie 5,Azul,2022,400000,Híbrido,300 hp,4x4,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Z4,Azul,2021,550000,Híbrido,200 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+X3,Rojo,2020,500000,Gasolina,300 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Serie 4,Azul,2023,500000,Gasolina,250 hp,4x4,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Serie 4,Rojo,2020,550000,Híbrido,350 hp,Trasera,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Z4,Blanco,2023,450000,Híbrido,200 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 8,Azul,2020,400000,Gasolina,350 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+Serie 5,Azul,2020,550000,Gasolina,200 hp,Trasera,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Z4,Azul,2022,350000,Híbrido,350 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 3,Azul,2021,550000,Gasolina,250 hp,4x4,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+X5,Gris,2022,450000,Híbrido,250 hp,Trasera,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Serie 5,Azul,2020,350000,Híbrido,350 hp,4x4,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Serie 8,Blanco,2021,400000,Híbrido,300 hp,Trasera,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg
+X3,Negro,2020,550000,Híbrido,200 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+Z4,Gris,2021,350000,Híbrido,250 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 4,Blanco,2022,350000,Gasolina,200 hp,Trasera,https://noticias.coches.com/wp-content/uploads/2021/06/BMW-Serie-4-Gran-Coupe-2022-4.jpg
+Serie 5,Blanco,2023,500000,Híbrido,250 hp,Trasera,https://img.automexico.com/2020/08/13/0M2xJlFh/p90389016-highres-the-new-bmw-530e-xdr-9856-1-d818.jpg
+Serie 3,Negro,2022,450000,Gasolina,250 hp,4x4,https://www.autobild.es/sites/autobild.es/public/dc/fotos/BMW_Serie_3_Berlina_03_0.jpg
+Z4,Azul,2021,550000,Híbrido,350 hp,4x4,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+X3,Gris,2022,550000,Híbrido,250 hp,4x4,https://www.elcarrocolombiano.com/wp-content/uploads/2021/06/Diseno-sin-titulo-17-9.jpg
+X5,Azul,2021,500000,Híbrido,300 hp,4x4,"https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x5-m-140-1582911136.jpg?crop=0.784xw:0.882xh;0.0721xw,0.118xh&resize=640:*"
+Z4,Rojo,2021,450000,Híbrido,250 hp,Trasera,https://cdn.motor1.com/images/mgl/VzX8RL/s3/bmw-z4-2023.jpg
+Serie 8,Blanco,2023,550000,Híbrido,200 hp,4x4,https://img.automexico.com/2021/07/23/rkwP8Fam/bmw-serie-8-2-0952.jpg

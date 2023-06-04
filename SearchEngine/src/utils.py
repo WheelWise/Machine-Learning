@@ -33,7 +33,7 @@ def make_sentence(obj):
                 except:
                     pass
                 if isinstance(value, str):
-                    values.append(value.lower())
+                    values.append(f"{key} {value}")
                 elif isinstance(value, bool) and value:
                     key = key.lower().replace("_", " ")
                     values.append(key)
@@ -50,8 +50,13 @@ def make_sentence(obj):
     for tag in model_tags:
         result += " " + tag
     result += ", el cual cuenta con :"
-    for value in values:
-        result += " " + value
+    for i in range(len(values)):
+        if i == len(values) - 1:
+            result += " y " + values[i]
+        elif i == 0:
+            result += " " + values[i]
+        else:
+            result += ", " + values[i]
     result += ". Asi es el "
     for key, value in car_info.items():
         result += f"{key} {value} "
@@ -64,7 +69,7 @@ def make_sentence(obj):
 if __name__ == "__main__":
     import csv
 
-    path = "../tools/catalogs/mazda_catalogo.csv"
+    path = "../tools/catalogos/nissan_catalogo.csv"
 
     with open(path, "r") as f:
         lines = f.readlines()
