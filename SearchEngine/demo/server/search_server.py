@@ -50,6 +50,7 @@ def search():
             jsonify(
                 {
                     "message": "Error getting data from the model",
+                    "cars": [],
                     "error": True,
                 }
             ),
@@ -94,6 +95,22 @@ def carsByAgency():
         cars = api.get_agency(agency_id)
         return jsonify({"message": "Success", "cars": cars, "error": False}), 200
     except:
+        return jsonify({"message": "Failed", "cars": [], "error": False}), 500
+
+
+@search_server.route("/cars/branch", methods=["POST"])
+def carsByBranch():
+    branch_id = request.values.get("id")
+    if not branch_id:
+        return (
+            jsonify({"message": "No branch id recieved", "cars": [], "error": True}),
+            400,
+        )
+    try:
+        cars = api.get_branch(branch_id)
+        return jsonify({"message": "Success", "cars": cars, "error": False}), 200
+    except Exception as e:
+        print(e)
         return jsonify({"message": "Failed", "cars": [], "error": False}), 500
 
 

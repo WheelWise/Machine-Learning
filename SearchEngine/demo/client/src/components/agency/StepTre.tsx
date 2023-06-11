@@ -28,7 +28,13 @@ export default function StepTre({
       setActualProgress(data.number);
     });
     //The agency id shoul be changed to the agency id of the user who is uploading the cars
-    socket.emit("start-processing", { fileId, view, make, agencyId: 4 });
+    socket.emit("start-processing", {
+      fileId,
+      view,
+      make,
+      agencyId: 3,
+      branchId: 13,
+    });
     setSocket(socket);
   };
 
@@ -99,7 +105,7 @@ export default function StepTre({
         {actualProgress === 0 && (
           <button
             onClick={startProcess}
-            className="rounded-md bg-violet-500 px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-110 active:bg-violet-800"
+            className="rounded-md bg-blue-500 px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-110 active:bg-blue-800"
           >
             Empezar
           </button>
@@ -107,17 +113,17 @@ export default function StepTre({
         {actualProgress !== 0 && (
           <>
             <div className="mb-1 flex justify-between">
-              <span className="text-base font-medium text-violet-800 dark:text-white">
+              <span className="text-base font-medium text-blue-800 dark:text-white">
                 Columnas Procesadas
               </span>
-              <span className="text-sm font-medium text-violet-800 dark:text-white">
+              <span className="text-sm font-medium text-blue-800 dark:text-white">
                 {Math.ceil((actualProgress * 100) / lines)} %
                 {actualProgress + 1 === lines && " Completo!"}
               </span>
             </div>
             <div className="h-2.5 rounded-full bg-gray-200 dark:bg-gray-700">
               <div
-                className="h-2.5 rounded-full bg-violet-500"
+                className="h-2.5 rounded-full bg-blue-500"
                 style={{ width: `${(actualProgress * 100) / lines}%` }}
               ></div>
             </div>
@@ -139,8 +145,8 @@ export default function StepTre({
         <button
           onClick={onNext}
           disabled={running}
-          className={`mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 ${
-            running ? "" : "hover:bg-violet-500 hover:text-white"
+          className={`mx-2 rounded-[2rem] border-2 border-blue-500 px-4 py-2 text-blue-500 transition-all duration-200 ${
+            running ? "" : "hover:bg-blue-500 hover:text-white"
           } `}
         >
           Continuar

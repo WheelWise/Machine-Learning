@@ -18,10 +18,11 @@ class Reader:
         self.sentencer = sentencer
         self.knowledge = []
 
-    def read_row(self, row: dict, agency: str, make: str, view: dict):
+    def read_row(self, row: dict, agency: str, branch: str, make: str, view: dict):
         description = self.sentencer(row)
         row["vector"] = self.embed(description)
         row["agency"] = agency
+        row["branch"] = branch
         row["view"] = view
         row["marca"] = make
         row["estatus"] = "stock"

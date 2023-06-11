@@ -84,7 +84,9 @@ def handle_start_processing(data):
         dict_reader = csv.DictReader(f)
         line = 1
         for row in dict_reader:
-            temp_reader.read_row(row, data["agencyId"], data["make"], data["view"])
+            temp_reader.read_row(
+                row, data["agencyId"], data["branchId"], data["make"], data["view"]
+            )
             emit("progress", {"number": line})
             line += 1
     temp_reader.push_to_db()

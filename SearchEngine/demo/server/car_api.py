@@ -38,3 +38,11 @@ class CarApi:
             document["_id"] = str(document["_id"])
             cars.append(document)
         return cars
+
+    def get_branch(self, branch):
+        cars = []
+        documents = self.collection.find({"branch": int(branch)}, {"vector": 0})
+        for document in documents:
+            document["_id"] = str(document["_id"])
+            cars.append(document)
+        return cars
