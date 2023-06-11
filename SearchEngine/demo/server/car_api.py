@@ -7,6 +7,28 @@ class CarApi:
         self.client = MongoClient(uri)
         self.collection = self.client[db_name]["autos"]
 
+    def search(self, query):
+        result = list(
+            self.collection.aggregate(
+                [
+                    {
+                        "$search": {
+                            "index": "autoIndex",
+                            "text": {
+                                "query": query,
+                                "path": {"wildcard": "*"},
+                                "fuzzy": {"maxEdits": 2, "prefixLength": 0},
+                            },
+                        }
+                    },
+                    {"$project": {"vector": 0}},
+                ]
+            )
+        )
+        for document in result:
+            document["_id"] = str(document["_id"])
+        return result
+
     def get_all(self):
         cars = []
         documents = self.collection.find({}, {"vector": 0})
