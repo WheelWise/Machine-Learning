@@ -102,8 +102,8 @@ export default function StepOne({
             </h2>
             <p className="mt-4 text-slate-500">
               Aqui puedes subir tu catalogo tal y como lo tienes,{" "}
-              <i className="text-violet-600">Wheelie</i> lo aprendera por ti y
-              se asegurara de que los clientes encuentren todo tus vechiculos!
+              <i className="text-blue-600">Wheelie</i> lo aprendera por ti y se
+              asegurara de que los clientes encuentren todo tus vechiculos!
               <br />
               <br />
               Puedes subir tu catalogo en un archivo csv o xls, ¡no importa la
@@ -250,7 +250,7 @@ export default function StepOne({
           <p className="my-4 text-slate-500">
             Perfecto! Estamos listos para recibir tu catalogo, sin embargo, es
             importante que consideres que esta accion entrenara a{" "}
-            <i className="text-violet-600">Wheelie</i>, por lo que es{" "}
+            <i className="text-blue-600">Wheelie</i>, por lo que es{" "}
             <i className="font-bold text-red-800">irreversible</i> <br />
             Al dar click en "Confirmar", estas aceptando la responsabilidad de
             tu catalogo.
@@ -266,7 +266,7 @@ export default function StepOne({
         </button>
         <button
           onClick={handleSubmit}
-          className="mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 hover:bg-violet-500 hover:text-white"
+          className="mx-2 rounded-[2rem] border-2 border-blue-500 px-4 py-2 text-blue-500 transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
           {error === 2 && "Regresar"}
           {error === 0 && "Subir"}

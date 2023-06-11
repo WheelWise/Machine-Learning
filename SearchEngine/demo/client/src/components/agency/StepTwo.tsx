@@ -90,7 +90,7 @@ export default function StepTwo({
             <span className="block text-xl font-bold text-emerald-500">
               Importante!
             </span>
-            <i className="text-violet-600">Wheelie</i> ha analizado tu archivo y
+            <i className="text-blue-600">Wheelie</i> ha analizado tu archivo y
             ha encontrado los atributos de tus vehiculos, ahora solo slecciona
             cuales de los atributos seran los que veran los clientes.{" "}
             <b className="text-pink-600">
@@ -194,7 +194,7 @@ export default function StepTwo({
         </button>
         <button
           onClick={handleSubmit}
-          className="mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 hover:bg-violet-500 hover:text-white"
+          className="mx-2 rounded-[2rem] border-2 border-blue-500 px-4 py-2 text-blue-500 transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
           Continuar
         </button>

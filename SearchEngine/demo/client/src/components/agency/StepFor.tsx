@@ -1,3 +1,6 @@
+import { Wheelie } from "@/assets";
+import Image from "next/image";
+
 type Props = {
   onCancel: (e: any) => void;
 };
@@ -31,17 +34,16 @@ export default function StepFor({ onCancel }: Props) {
             4. Resultados.
           </h2>
           <div
-            className={` mx-8 mt-4 h-[80%] rounded-md border-2  border-dashed border-slate-400 p-6`}
+            className={` mt-4s mx-auto w-[70%] rounded-md border-2  border-dashed border-slate-200 p-6`}
           >
-            {" "}
-            Wheelie
+            <Image src={Wheelie} alt="Wheelie" />
           </div>
         </div>
         <div className="col-span-1 ">
           <p className="mr-6 mt-10 text-slate-500">
-            Felicidades! <i className="text-violet-600">Wheelie</i> Ha aprendido
-            y analizado el archivo que le diste, ahora tus vehiculos apareceran
-            en las busquedas de todos los usuarios. <br /> <br />
+            Felicidades! <i className="text-blue-600">Wheelie</i> Ha aprendido y
+            analizado el archivo que le diste, ahora tus vehiculos apareceran en
+            las busquedas de todos los usuarios. <br /> <br />
             <span className="text-xs ">
               Los autos se han añadidos al dashboard de tu catalogo, usalo
               sabiamente para administrar tus vehiculos.
@@ -52,7 +54,7 @@ export default function StepFor({ onCancel }: Props) {
       <div className="col-span-6 row-start-6 mx-6 items-end  justify-end text-end ">
         <button
           onClick={onCancel}
-          className="mx-2 rounded-[2rem] border-2 border-violet-500 px-4 py-2 text-violet-500 transition-all duration-200 hover:bg-violet-500 hover:text-white"
+          className="mx-2 rounded-[2rem] border-2 border-blue-500 px-4 py-2 text-blue-500 transition-all duration-200 hover:bg-blue-500 hover:text-white"
         >
           Aceptar
         </button>

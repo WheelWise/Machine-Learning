@@ -32,7 +32,7 @@ export default function CatalogUploader() {
         onClick={handleModal}
         data-modal-target="defaultModal"
         data-modal-toggle="defaultModal"
-        className="tranistion-all group rounded-md bg-indigo-900 py-2 pl-6 pr-14 text-white duration-300 hover:scale-110"
+        className="tranistion-all group rounded-md bg-blue-600 py-2 pl-6 pr-14 text-white duration-300 hover:scale-110"
       >
         <svg
           className="mr-6 inline-block h-6 w-6 text-white transition-all duration-500 group-hover:rotate-180"
