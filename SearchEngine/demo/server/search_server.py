@@ -129,5 +129,18 @@ def carsByMake():
         return jsonify({"message": "Failed", "cars": [], "error": False}), 500
 
 
+@search_server.route("/fullTextSearch", methods=["POST"])
+def full_text_search():
+    string = request.values.get("search")
+    if not string:
+        return jsonify({"message": "No string search received", "error": True}), 400
+    try:
+        cars = api.search(string)
+        return jsonify({"message": "Success", "cars": cars, "error": False}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"message": "Failed", "cars": [], "error": False}), 500
+
+
 if __name__ == "__main__":
     search_server.run(host="0.0.0.0", port=8084)
